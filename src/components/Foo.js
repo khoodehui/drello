@@ -1,5 +1,5 @@
 const Foo = () => {
-  return "Foo Page"
+  return 'Foo Page'
 }
 
 export default Foo
