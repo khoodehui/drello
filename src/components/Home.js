@@ -1,6 +1,8 @@
 import { v4 as uuid } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
-import { newBoard, deleteBoard } from '../reducers/boardsReducer'
+import { newBoard } from '../reducers/boardsReducer'
+import { Button } from '@mui/material'
+import BoardCard from './BoardCard'
 
 const Home = () => {
   const boards = useSelector(state => state.boards.boards)
@@ -15,21 +17,15 @@ const Home = () => {
     dispatch(newBoard(board))
   }
 
-  const handleDeleteBoard = id => () => {
-    dispatch(deleteBoard(id))
-  }
-
   return (
     <div>
       <h1>Home</h1>
       {boards.map(board => (
-        <div key={board.id}>
-          <h2>{board.name}</h2>
-          <p>{board.desc}</p>
-          <button onClick={handleDeleteBoard(board.id)}>Delete Board</button>
-        </div>
+        <BoardCard key={board.id} board={board} />
       ))}
-      <button onClick={handleNewBoard}>Create New</button>
+      <Button variant='contained' onClick={handleNewBoard}>
+        Create New
+      </Button>
     </div>
   )
 }
