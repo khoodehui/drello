@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <main>
-      <Typography variant='h2' align='center' component='h1'>
+      <Typography variant='h3' align='center' component='h1'>
         Home
       </Typography>
       <Container maxWidth='md'>
