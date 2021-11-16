@@ -81,6 +81,7 @@ const NewBoardCard = () => {
               id='name'
               label='Board Name'
               variant='standard'
+              size='small'
               autoFocus
               onChange={handleToggleSubmitDisable}
             />
@@ -88,6 +89,7 @@ const NewBoardCard = () => {
               id='desc'
               label='Description (optional)'
               variant='outlined'
+              size='small'
               multiline
             />
             <Stack direction='row' spacing={2} justifyContent='stretch'>
