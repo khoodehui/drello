@@ -1,9 +1,20 @@
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { deleteBoard } from '../reducers/boardsReducer'
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Stack,
+  Typography,
+} from '@mui/material'
 
 const BoardCard = ({ board }) => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const handleOpenBoard = () => navigate(`/${board.id}`)
 
   const handleDeleteBoard = () => dispatch(deleteBoard(board.id))
 
@@ -15,23 +26,24 @@ const BoardCard = ({ board }) => {
             {board.name}
           </Typography>
           <Typography color='text.secondary'>{board.desc}</Typography>
-          <Grid container spacing={2} display='flex'>
-            <Grid item xs={6} sx={{ flex: 1 }}>
-              <Button variant='contained' color='primary' sx={{width: '100%'}}>
-                Open
-              </Button>
-            </Grid>
-            <Grid item xs={6} sx={{ flex: 1 }}>
-              <Button
-                variant='outlined'
-                color='error'
-                onClick={handleDeleteBoard}
-                sx={{width: '100%'}}
-              >
-                Delete
-              </Button>
-            </Grid>
-          </Grid>
+          <Stack direction='row' spacing={2} justifyContent='stretch'>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={handleOpenBoard}
+              sx={{ flex: 1 }}
+            >
+              Open
+            </Button>
+            <Button
+              variant='outlined'
+              color='error'
+              onClick={handleDeleteBoard}
+              sx={{ flex: 1 }}
+            >
+              Delete
+            </Button>
+          </Stack>
         </CardContent>
       </Card>
     </Grid>

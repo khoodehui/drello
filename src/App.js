@@ -2,9 +2,9 @@ import { Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import Home from './components/Home'
-import Foo from './components/Foo'
 import { useDispatch } from 'react-redux'
 import { initBoardsNewUser, initBoardsFromStorage } from './reducers/boardsReducer'
+import Board from './components/Board'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/foo' element={<Foo />} />
+      <Route path='/:id' element={<Board />} />
     </Routes>
   )
 }
