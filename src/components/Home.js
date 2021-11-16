@@ -1,32 +1,25 @@
-import { v4 as uuid } from 'uuid'
-import { useDispatch, useSelector } from 'react-redux'
-import { newBoard } from '../reducers/boardsReducer'
-import { Button } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { Container, Grid, Typography } from '@mui/material'
 import BoardCard from './BoardCard'
+import NewBoardCard from './NewBoardCard'
 
 const Home = () => {
   const boards = useSelector(state => state.boards.boards)
-  const dispatch = useDispatch()
-
-  const handleNewBoard = () => {
-    const board = {
-      id: uuid(),
-      name: 'New Board',
-      desc: 'Board Desc',
-    }
-    dispatch(newBoard(board))
-  }
 
   return (
-    <div>
-      <h1>Home</h1>
-      {boards.map(board => (
-        <BoardCard key={board.id} board={board} />
-      ))}
-      <Button variant='contained' onClick={handleNewBoard}>
-        Create New
-      </Button>
-    </div>
+    <main>
+      <Typography variant='h2' align='center' component='h1'>
+        Home
+      </Typography>
+      <Container maxWidth='md'>
+        <Grid container spacing={4}>
+        {boards.map(board => (
+          <BoardCard key={board.id} board={board} />
+        ))}
+        <NewBoardCard />
+        </Grid>
+      </Container>
+    </main>
   )
 }
 
