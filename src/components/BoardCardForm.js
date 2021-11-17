@@ -72,6 +72,9 @@ const BoardCardForm = props => {
               onChange={handleDescChange}
             />
             <Stack direction='row' spacing={2} justifyContent='stretch'>
+              <Button onClick={handleCancel} sx={{ flex: 1 }}>
+                Cancel
+              </Button>
               <Button
                 type='submit'
                 variant='contained'
@@ -79,9 +82,6 @@ const BoardCardForm = props => {
                 disabled={disableSubmit}
               >
                 {props.type === 'create' ? 'Create' : 'Save'}
-              </Button>
-              <Button onClick={handleCancel} sx={{ flex: 1 }}>
-                Cancel
               </Button>
             </Stack>
           </Box>
