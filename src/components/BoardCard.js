@@ -6,14 +6,23 @@ import {
   Card,
   CardActions,
   CardContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   IconButton,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Stack,
   Typography,
 } from '@mui/material'
-import { MoreVert } from '@mui/icons-material'
+import MoreVert from '@mui/icons-material/MoreVert'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
 import BoardCardForm from './BoardCardForm'
 
@@ -22,6 +31,7 @@ const BoardCard = ({ board }) => {
   const dispatch = useDispatch()
 
   const [menuAnchor, setMenuAnchor] = useState(null)
+  const [showDialog, setShowDialog] = useState(false)
   const [editing, setEditing] = useState(false)
   const open = Boolean(menuAnchor)
 
@@ -29,18 +39,29 @@ const BoardCard = ({ board }) => {
   const handleCloseMenu = () => setMenuAnchor(null)
 
   const handleEdit = () => {
-    setEditing(true)
     setMenuAnchor(null)
+    setEditing(true)
   }
 
   const handleOpenBoard = () => navigate(`/${board.id}`)
-  const handleDeleteBoard = () => dispatch(deleteBoard(board.id))
+  const handleDeleteBoard = () => {
+    setMenuAnchor(null)
+    setShowDialog(true)
+  }
+
+  const handleCloseDialog = () => setShowDialog(false)
+
+  const handleDeleteConfirm = () => {
+    setShowDialog(false)
+    dispatch(deleteBoard(board.id))
+  }
 
   if (editing) {
     return <BoardCardForm type='update' setEditing={setEditing} board={board} />
   }
 
   return (
+    <>
     <Grid item xs={12} sm={6} md={4}>
       <Card variant='outlined'>
         <CardContent>
@@ -52,8 +73,18 @@ const BoardCard = ({ board }) => {
               <MoreVert />
             </IconButton>
             <Menu anchorEl={menuAnchor} open={open} onClose={handleCloseMenu}>
-              <MenuItem onClick={handleEdit}>Edit</MenuItem>
-              <MenuItem onClick={handleDeleteBoard}>Delete</MenuItem>
+              <MenuItem onClick={handleEdit}>
+                <ListItemIcon>
+                  <EditIcon fontSize='small' />
+                </ListItemIcon>
+                <ListItemText>Edit</ListItemText>
+              </MenuItem>
+              <MenuItem onClick={handleDeleteBoard}>
+                <ListItemIcon>
+                  <DeleteIcon fontSize='small' />
+                </ListItemIcon>
+                <ListItemText>Delete</ListItemText>
+              </MenuItem>
             </Menu>
           </Stack>
           <Typography color='text.secondary'>{board.desc}</Typography>
@@ -63,6 +94,19 @@ const BoardCard = ({ board }) => {
         </CardActions>
       </Card>
     </Grid>
+    <Dialog open={showDialog} onClose={handleCloseDialog}>
+      <DialogTitle>
+        {`Delete ${board.name}`}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>Are you sure?</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseDialog}>Cancel</Button>
+        <Button onClick={handleDeleteConfirm}>Delete</Button>
+      </DialogActions>
+    </Dialog>
+    </>
   )
 }
 
