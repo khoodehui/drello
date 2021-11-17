@@ -4,7 +4,6 @@ import { deleteBoard } from '../reducers/boardsReducer'
 import {
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   Grid,
@@ -16,18 +15,30 @@ import {
 } from '@mui/material'
 import { MoreVert } from '@mui/icons-material'
 import { useState } from 'react'
+import BoardCardForm from './BoardCardForm'
 
 const BoardCard = ({ board }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [menuAnchor, setMenuAnchor] = useState()
+
+  const [menuAnchor, setMenuAnchor] = useState(null)
+  const [editing, setEditing] = useState(false)
   const open = Boolean(menuAnchor)
+
   const handleOpenMenu = event => setMenuAnchor(event.currentTarget)
-  const handleCloseMenu = event => setMenuAnchor(null)
+  const handleCloseMenu = () => setMenuAnchor(null)
+
+  const handleEdit = () => {
+    setEditing(true)
+    setMenuAnchor(null)
+  }
 
   const handleOpenBoard = () => navigate(`/${board.id}`)
-
   const handleDeleteBoard = () => dispatch(deleteBoard(board.id))
+
+  if (editing) {
+    return <BoardCardForm type='update' setEditing={setEditing} board={board} />
+  }
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -41,8 +52,7 @@ const BoardCard = ({ board }) => {
               <MoreVert />
             </IconButton>
             <Menu anchorEl={menuAnchor} open={open} onClose={handleCloseMenu}>
-              <MenuItem>Change name</MenuItem>
-              <MenuItem>Change description</MenuItem>
+              <MenuItem onClick={handleEdit}>Edit</MenuItem>
               <MenuItem onClick={handleDeleteBoard}>Delete</MenuItem>
             </Menu>
           </Stack>
