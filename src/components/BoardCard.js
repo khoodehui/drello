@@ -63,7 +63,7 @@ const BoardCard = ({ board }) => {
   return (
     <>
     <Grid item xs={12} sm={6} md={4}>
-      <Card variant='outlined'>
+      <Card>
         <CardContent>
           <Stack direction='row' justifyContent='space-between'>
             <Typography variant='h5' component='h2'>

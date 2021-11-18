@@ -52,9 +52,9 @@ const BoardCardForm = props => {
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <Card variant='outlined'>
-        <CardContent>
-          <Box component='form' onSubmit={handleSubmit}>
+      <Card>
+        <Box component='form' onSubmit={handleSubmit}>
+          <CardContent>
             <TextField
               id='name'
               placeholder='Board Name'
@@ -63,7 +63,7 @@ const BoardCardForm = props => {
               autoFocus
               value={name}
               onChange={handleNameChange}
-              sx={{paddingBottom: 2}}
+              sx={{ paddingBottom: 2, width: '100%' }}
             />
             <TextField
               id='desc'
@@ -73,22 +73,23 @@ const BoardCardForm = props => {
               size='small'
               value={desc}
               onChange={handleDescChange}
+              sx={{width: '100%'}}
             />
-          </Box>
-        </CardContent>
-        <CardActions>
-          <Button onClick={handleCancel} sx={{ width: '50%' }}>
-            Cancel
-          </Button>
-          <Button
-            type='submit'
-            variant='contained'
-            sx={{ width: '50%' }}
-            disabled={disableSubmit}
-          >
-            {props.type === 'create' ? 'Create' : 'Save'}
-          </Button>
-        </CardActions>
+          </CardContent>
+          <CardActions>
+            <Button onClick={handleCancel} sx={{ width: '50%' }}>
+              Cancel
+            </Button>
+            <Button
+              type='submit'
+              variant='contained'
+              sx={{ width: '50%' }}
+              disabled={disableSubmit}
+            >
+              {props.type === 'create' ? 'Create' : 'Save'}
+            </Button>
+          </CardActions>
+        </Box>
       </Card>
     </Grid>
   )
