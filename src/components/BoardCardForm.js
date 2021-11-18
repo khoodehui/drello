@@ -5,9 +5,9 @@ import { newBoard, updateBoard } from '../reducers/boardsReducer'
 import {
   Button,
   Card,
+  CardActions,
   CardContent,
   Grid,
-  Stack,
   TextField,
 } from '@mui/material'
 import { Box } from '@mui/system'
@@ -63,30 +63,32 @@ const BoardCardForm = props => {
               autoFocus
               value={name}
               onChange={handleNameChange}
+              sx={{paddingBottom: 2}}
             />
             <TextField
               id='desc'
               placeholder='Description (optional)'
               variant='outlined'
               multiline
+              size='small'
               value={desc}
               onChange={handleDescChange}
             />
-            <Stack direction='row' spacing={2} justifyContent='stretch'>
-              <Button onClick={handleCancel} sx={{ flex: 1 }}>
-                Cancel
-              </Button>
-              <Button
-                type='submit'
-                variant='contained'
-                sx={{ flex: 1 }}
-                disabled={disableSubmit}
-              >
-                {props.type === 'create' ? 'Create' : 'Save'}
-              </Button>
-            </Stack>
           </Box>
         </CardContent>
+        <CardActions>
+          <Button onClick={handleCancel} sx={{ width: '50%' }}>
+            Cancel
+          </Button>
+          <Button
+            type='submit'
+            variant='contained'
+            sx={{ width: '50%' }}
+            disabled={disableSubmit}
+          >
+            {props.type === 'create' ? 'Create' : 'Save'}
+          </Button>
+        </CardActions>
       </Card>
     </Grid>
   )
