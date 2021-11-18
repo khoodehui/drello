@@ -59,6 +59,7 @@ const BoardCardForm = props => {
               id='name'
               placeholder='Board Name'
               variant='standard'
+              autoComplete='off'
               autoFocus
               value={name}
               onChange={handleNameChange}
