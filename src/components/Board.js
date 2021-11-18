@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 const Board = () => {
   const id = useParams().id
-  const board = useSelector(state => state.boards.boards.find(board => board.id === id))
+  const board = useSelector(state => state.boards.find(board => board.id === id))
 
   if (!board) {
     return null
