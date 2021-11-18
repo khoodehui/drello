@@ -4,7 +4,7 @@ import BoardCard from './BoardCard'
 import NewBoardCard from './NewBoardCard'
 
 const Home = () => {
-  const boards = useSelector(state => state.boards.boards)
+  const boards = useSelector(state => state.boards)
 
   return (
     <main>

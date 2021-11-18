@@ -8,7 +8,7 @@ const store =  configureStore({
 })
 
 store.subscribe(() => {
-  localStorage.setItem('boards', JSON.stringify(store.getState().boards.boards))
+  localStorage.setItem('boards', JSON.stringify(store.getState().boards))
 })
 
 export default store

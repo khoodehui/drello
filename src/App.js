@@ -3,18 +3,21 @@ import { useEffect } from 'react'
 
 import Home from './components/Home'
 import { useDispatch } from 'react-redux'
-import { initBoardsNewUser, initBoardsFromStorage } from './reducers/boardsReducer'
+import {
+  initSampleBoard,
+  initBoardsFromStorage,
+} from './reducers/boardsReducer'
 import Board from './components/Board'
 
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const savedBoardsData = window.localStorage.getItem("boards");
+    const savedBoardsData = window.localStorage.getItem('boards')
     if (savedBoardsData) {
-      dispatch(initBoardsFromStorage(savedBoardsData))
+      dispatch(initBoardsFromStorage(JSON.parse(savedBoardsData)))
     } else {
-      dispatch(initBoardsNewUser())
+      dispatch(initSampleBoard())
     }
   }, [dispatch])
 

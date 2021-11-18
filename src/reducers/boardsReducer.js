@@ -8,24 +8,22 @@ const sampleBoard = {
 
 const boardsSlice = createSlice({
   name: 'boards',
-  initialState: {
-    boards: [],
-  },
+  initialState: [],
   reducers: {
-    initBoardsNewUser: state => {
-      state.boards.push(sampleBoard)
+    initSampleBoard: state => {
+      state.push(sampleBoard)
     },
     initBoardsFromStorage: (state, action) => {
-      state.boards = JSON.parse(action.payload)
+      return action.payload
     },
     newBoard: (state, action) => {
-      state.boards.push(action.payload)
+      state.push(action.payload)
     },
     deleteBoard: (state, action) => {
-      state.boards = state.boards.filter(board => board.id !== action.payload)
+      return state.filter(board => board.id !== action.payload)
     },
     updateBoard: (state, action) => {
-      state.boards = state.boards.map(board =>
+      return state.map(board =>
         board.id === action.payload.id ? action.payload : board
       )
     },
@@ -33,7 +31,7 @@ const boardsSlice = createSlice({
 })
 
 export const {
-  initBoardsNewUser,
+  initSampleBoard,
   initBoardsFromStorage,
   newBoard,
   deleteBoard,
