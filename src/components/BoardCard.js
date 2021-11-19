@@ -62,50 +62,48 @@ const BoardCard = ({ board }) => {
 
   return (
     <>
-    <Grid item xs={12} sm={6} md={4}>
-      <Card>
-        <CardContent>
-          <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5' component='h2'>
-              {board.name}
-            </Typography>
-            <IconButton onClick={handleOpenMenu}>
-              <MoreVert />
-            </IconButton>
-            <Menu anchorEl={menuAnchor} open={open} onClose={handleCloseMenu}>
-              <MenuItem onClick={handleEdit}>
-                <ListItemIcon>
-                  <EditIcon fontSize='small' />
-                </ListItemIcon>
-                <ListItemText>Edit</ListItemText>
-              </MenuItem>
-              <MenuItem onClick={handleDeleteBoard}>
-                <ListItemIcon>
-                  <DeleteIcon fontSize='small' />
-                </ListItemIcon>
-                <ListItemText>Delete</ListItemText>
-              </MenuItem>
-            </Menu>
-          </Stack>
-          <Typography color='text.secondary'>{board.desc}</Typography>
-        </CardContent>
-        <CardActions>
-          <Button onClick={handleOpenBoard}>Open</Button>
-        </CardActions>
-      </Card>
-    </Grid>
-    <Dialog open={showDialog} onClose={handleCloseDialog}>
-      <DialogTitle>
-        {`Delete ${board.name}`}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>Are you sure?</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseDialog}>Cancel</Button>
-        <Button onClick={handleDeleteConfirm}>Delete</Button>
-      </DialogActions>
-    </Dialog>
+      <Grid item xs={12} sm={6} md={4}>
+        <Card>
+          <CardContent>
+            <Stack direction='row' justifyContent='space-between'>
+              <Typography variant='h5' component='h2' display='inline' noWrap>
+                {board.name}
+              </Typography>
+              <IconButton onClick={handleOpenMenu}>
+                <MoreVert />
+              </IconButton>
+              <Menu anchorEl={menuAnchor} open={open} onClose={handleCloseMenu}>
+                <MenuItem onClick={handleEdit}>
+                  <ListItemIcon>
+                    <EditIcon fontSize='small' />
+                  </ListItemIcon>
+                  <ListItemText>Edit</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={handleDeleteBoard}>
+                  <ListItemIcon>
+                    <DeleteIcon fontSize='small' />
+                  </ListItemIcon>
+                  <ListItemText>Delete</ListItemText>
+                </MenuItem>
+              </Menu>
+            </Stack>
+            <Typography color='text.secondary'>{board.desc}</Typography>
+          </CardContent>
+          <CardActions>
+            <Button onClick={handleOpenBoard}>Open</Button>
+          </CardActions>
+        </Card>
+      </Grid>
+      <Dialog open={showDialog} onClose={handleCloseDialog}>
+        <DialogTitle>{`Delete ${board.name}`}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Are you sure?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={handleDeleteConfirm}>Delete</Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }
