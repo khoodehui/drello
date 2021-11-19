@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { newBoard, updateBoard } from '../reducers/boardsReducer'
 import {
   Button,
   Card,
@@ -10,7 +8,7 @@ import {
   TextField,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import { createNewBoard } from '../utils/boardCreator'
+import useBoardUtil from '../hooks/useBoardUtil'
 
 const BoardCardForm = props => {
   // if creating, use empty name and desc
@@ -22,7 +20,7 @@ const BoardCardForm = props => {
     props.type === 'create' ? '' : props.board.desc
   )
 
-  const dispatch = useDispatch()
+  const { createBoard, updateBoardInfo } = useBoardUtil()
 
   const handleNameChange = event => setName(event.target.value)
   const handleDescChange = event => setDesc(event.target.value)
@@ -31,11 +29,9 @@ const BoardCardForm = props => {
     event.preventDefault()
 
     if (props.type === 'create') {
-      const board = createNewBoard(name, desc)
-      dispatch(newBoard(board))
+      createBoard(name, desc)
     } else {
-      const board = { ...props.board, name, desc }
-      dispatch(updateBoard(board))
+      updateBoardInfo(...props.board, name, desc)
     }
 
     props.setEditing(false)

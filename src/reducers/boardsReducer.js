@@ -1,16 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { createSampleBoard } from '../utils/boardCreator'
 
 const boardsSlice = createSlice({
   name: 'boards',
   initialState: [],
   reducers: {
-    initSampleBoard: state => {
-      state.push(createSampleBoard())
-    },
-    initBoardsFromStorage: (state, action) => {
-      return action.payload
-    },
     newBoard: (state, action) => {
       state.push(action.payload)
     },
@@ -26,8 +19,6 @@ const boardsSlice = createSlice({
 })
 
 export const {
-  initSampleBoard,
-  initBoardsFromStorage,
   newBoard,
   deleteBoard,
   updateBoard,

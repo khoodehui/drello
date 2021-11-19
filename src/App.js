@@ -1,25 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
-import { useEffect } from 'react'
-
 import Home from './components/Home'
-import { useDispatch } from 'react-redux'
-import {
-  initSampleBoard,
-  initBoardsFromStorage,
-} from './reducers/boardsReducer'
 import Board from './components/Board'
+import useBoardUtil from './hooks/useBoardUtil'
 
 const App = () => {
-  const dispatch = useDispatch()
+  const {createSampleBoard} = useBoardUtil()
 
-  useEffect(() => {
-    const savedBoardsData = window.localStorage.getItem('boards')
-    if (savedBoardsData) {
-      dispatch(initBoardsFromStorage(JSON.parse(savedBoardsData)))
-    } else {
-      dispatch(initSampleBoard())
-    }
-  }, [dispatch])
+  if (!localStorage.getItem('appState')) {
+    createSampleBoard()
+  }
 
   return (
     <Routes>
