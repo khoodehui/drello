@@ -1,17 +1,18 @@
+import { Card, CardContent, Typography } from '@mui/material'
 import { Draggable } from 'react-beautiful-dnd'
 
 const BoardListItem = ({ item, index }) => {
   return (
     <Draggable draggableId={item.id} index={index}>
       {provided => (
-        <div
+        <Card
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={{height: 40, ...provided.draggableProps.style}}
+          style={{marginTop: 8, ...provided.draggableProps.style}}
         >
-          {item.content}
-        </div>
+          <CardContent><Typography>{item.content}</Typography></CardContent>
+        </Card>
       )}
     </Draggable>
   )
