@@ -28,7 +28,6 @@ const useListUtil = () => {
   }
 
   const addItemToList = (list, itemId) => {
-    console.log(itemId)
     const newItemsList = list.items.concat(itemId)
     const updatedList = { ...list, items: newItemsList }
     dispatch(updateList(updatedList))
@@ -40,14 +39,25 @@ const useListUtil = () => {
     dispatch(updateList(updatedList))
   }
 
-  const swapItemsInList = (list, firstIndex, secondIndex) => {
-    const firstItem = list.items[firstIndex]
-    const secondItem = list.items[secondIndex]
+  const swapItemsInList = (list, sourceIndex, destIndex) => {
     const newItemsList = Array.from(list.items)
-    newItemsList[firstIndex] = secondItem
-    newItemsList[secondIndex] = firstItem
+    const [item] = newItemsList.splice(sourceIndex, 1)
+    newItemsList.splice(destIndex, 0, item)
     const updatedList = { ...list, items: newItemsList }
     dispatch(updateList(updatedList))
+  }
+
+  const swapItemBetweenLists = (sourceList, destList, sourceIndex, destIndex) => {
+    const newSourceListItems = Array.from(sourceList.items)
+    const newDestListItems = Array.from(destList.items)
+
+    const [item] = newSourceListItems.splice(sourceIndex, 1)
+    newDestListItems.splice(destIndex, 0 , item)
+
+    const updatedSourceList = { ...sourceList, items: newSourceListItems }
+    const updatedDestList = { ...destList, items: newDestListItems }
+    dispatch(updateList(updatedSourceList))
+    dispatch(updateList(updatedDestList))
   }
 
   return {
@@ -59,6 +69,7 @@ const useListUtil = () => {
     addItemToList,
     removeItemFromList,
     swapItemsInList,
+    swapItemBetweenLists
   }
 }
 

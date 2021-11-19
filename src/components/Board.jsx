@@ -1,14 +1,14 @@
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import BoardList from './BoardList'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { Container, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import useBoardUtil from '../hooks/useBoardUtil'
+import useListUtil from '../hooks/useListUtil'
 
 const Board = () => {
   const id = useParams().id
   const { getBoardById } = useBoardUtil()
+  const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
 
   if (!board) {
@@ -16,7 +16,7 @@ const Board = () => {
   }
 
   const onDragEnd = result => {
-    const { source, destination, draggableId } = result
+    const { source, destination } = result
 
     if (!destination) {
       return
@@ -28,6 +28,13 @@ const Board = () => {
     ) {
       return
     }
+
+    if (destination.droppableId === source.droppableId) {
+      swapItemsInList(getListById(destination.droppableId), source.index, destination.index)
+    } else {
+      swapItemBetweenLists(getListById(source.droppableId), getListById(destination.droppableId), source.index, destination.index)
+    }
+
   }
 
   return (
