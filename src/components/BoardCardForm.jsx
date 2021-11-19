@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { v4 as uuid } from 'uuid'
 import { useDispatch } from 'react-redux'
 import { newBoard, updateBoard } from '../reducers/boardsReducer'
 import {
@@ -11,6 +10,7 @@ import {
   TextField,
 } from '@mui/material'
 import { Box } from '@mui/system'
+import { createNewBoard } from '../utils/boardCreator'
 
 const BoardCardForm = props => {
   // if creating, use empty name and desc
@@ -31,7 +31,7 @@ const BoardCardForm = props => {
     event.preventDefault()
 
     if (props.type === 'create') {
-      const board = { id: uuid(), name, desc }
+      const board = createNewBoard(name, desc)
       dispatch(newBoard(board))
     } else {
       const board = { ...props.board, name, desc }
