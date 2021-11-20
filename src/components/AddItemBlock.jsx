@@ -16,6 +16,11 @@ const AddItemBlock = ({ list }) => {
   const isAddDisabled =
     list.items.length >= list.maxItems || content.trim().length === 0
 
+  const stopAdding = () => {
+    setIsAdding(false)
+    setContent('')
+  }
+
   const handleKeyDown = event => {
     if (event.key === 'Enter' && !isAddDisabled) {
       addItem()
@@ -28,16 +33,11 @@ const AddItemBlock = ({ list }) => {
     if (!isAddDisabled) {
       addItem()
     }
-    setIsAdding(false)
+    stopAdding()
   }
 
   const addItem = () => {
     addItemToList(list, createItem(content.trim()).id)
-    setContent('')
-  }
-
-  const stopAdding = () => {
-    setIsAdding(false)
     setContent('')
   }
 

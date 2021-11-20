@@ -87,7 +87,12 @@ const BoardList = ({ listId }) => {
               </Box>
             </Stack>
             {list.items.map((itemId, index) => (
-              <BoardListItem key={itemId} itemId={itemId} index={index} />
+              <BoardListItem
+                key={itemId}
+                itemId={itemId}
+                index={index}
+                list={list}
+              />
             ))}
             {provided.placeholder}
             <AddItemBlock list={list} />
