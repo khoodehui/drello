@@ -1,12 +1,17 @@
 import { AppBar, Toolbar, Typography } from '@mui/material'
-import DashboardIcon from '@mui/icons-material/Dashboard'
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import { useNavigate } from 'react-router'
 
 const DrelloAppBar = () => {
+  const navigate = useNavigate()
+
+  const goHome = () => navigate('/')
+
   return (
     <AppBar position='relative'>
-      <Toolbar sx={{ cursor: 'pointer' }}>
-        <DashboardIcon sx={{ mr: 1 }} />
-        <Typography variant='h6'>Drello</Typography>
+      <Toolbar>
+        <DashboardIcon sx={{mr: 1}}/>
+        <Typography onClick={goHome} variant='h6' sx={{cursor: 'pointer'}}>Drello</Typography>
       </Toolbar>
     </AppBar>
   )
