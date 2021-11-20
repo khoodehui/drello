@@ -8,12 +8,15 @@ const EditableTypography = ({
   children
 }) => {
   const [isEditing, setIsEditing] = useState(false)
-
   const handleToggleEdit = () => setIsEditing(true)
+
+  const handleOnFocus = event => {
+    event.target.select()
+  }
 
   // allows input to be saved by pressing enter or escape keys
   const handleKeyDown = event => {
-    if (event.key === 'Enter' || event.key === 'Escape') {
+    if (event.key === 'Enter' || event.key === 'Escape' || event.key === 'GoBack') {
       event.target.blur()
     }
   }
@@ -27,9 +30,11 @@ const EditableTypography = ({
   if (isEditing) {
     return (
       <TextField
+        variant='standard'
         autoComplete='off'
         autoFocus
         defaultValue={children}
+        onFocus={handleOnFocus}
         onKeyDown={handleKeyDown}
         onBlur={handleOnBlur}
         {...textFieldProps}

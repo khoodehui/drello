@@ -3,15 +3,29 @@ import { Box, Stack, Typography } from '@mui/material'
 import { Droppable } from 'react-beautiful-dnd'
 import BoardListItem from './BoardListItem'
 import useListUtil from '../hooks/useListUtil'
-import EditableTypography from './EditableText'
+import EditableTypography from './EditableTypography'
 
 const BoardList = ({ listId }) => {
-  const { getListById, setListMaxItems } = useListUtil()
+  const { getListById, renameList, setListMaxItems } = useListUtil()
   const list = getListById(listId)
 
+  const updateListName = value => {
+    if (value.length > 0) {
+      renameList(list, value)
+    }
+  }
+
   const updateMaxItems = value => {
+    /*
+    don't update if there is no input or input is not a number
+    (since type of input field is set to number, non number inputs will return at an empty string)
+    */
+    if (value.length === 0) return
+
     const parsedValue = Number(value)
-    const newMax = parsedValue < list.items.length ? list.items.length : parsedValue
+    // new max must be at least the number of items in the list
+    const newMax =
+      parsedValue < list.items.length ? list.items.length : parsedValue
     setListMaxItems(list, newMax)
   }
 
@@ -29,9 +43,16 @@ const BoardList = ({ listId }) => {
             }}
           >
             <Stack direction='row' justifyContent='space-between'>
-              <Typography variant='h5' component='h2' fontWeight={500}>
+              <EditableTypography
+                handleSaveChange={updateListName}
+                typographyProps={{
+                  variant: 'h5',
+                  component: 'h2',
+                  fontWeight: 500,
+                }}
+              >
                 {list.name}
-              </Typography>
+              </EditableTypography>
               <Box>
                 <Typography
                   variant='h5'
