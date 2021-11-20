@@ -31,7 +31,7 @@ const BoardCardForm = props => {
     if (props.type === 'create') {
       createBoard(name, desc)
     } else {
-      updateBoardInfo(...props.board, name, desc)
+      updateBoardInfo(props.board, name, desc)
     }
 
     props.setEditing(false)
