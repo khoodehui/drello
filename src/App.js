@@ -4,8 +4,9 @@ import Board from './components/Board'
 import useBoardUtil from './hooks/useBoardUtil'
 
 const App = () => {
-  const {createSampleBoard} = useBoardUtil()
+  const { createSampleBoard } = useBoardUtil()
 
+  // if application is used for the first time, initalize a sample board
   if (!localStorage.getItem('appState')) {
     createSampleBoard()
   }

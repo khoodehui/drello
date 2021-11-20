@@ -11,15 +11,25 @@ const Board = () => {
   const { getListById, enableDrop, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
 
+  /*
+  The board variable may take a moment to initialise. When it does not have a value
+  yet, return null in the meantime.
+  */ 
   if (!board) {
     return null
   }
 
+  /* 
+  In the case when a list already has maximum items, this will allow items to still 
+  be dragged and dropped within that list. The correct value for isDropDisabled for 
+  the list will be restored when the drag and drop operation completes.
+  */
   const onDragStart = start => {
     const { source } = start
     enableDrop(getListById(source.droppableId))
   }
 
+  // Updates the state(s) of the involved list(s) at the end of a drag and drop operation
   const onDragEnd = result => {
     const { source, destination } = result
 

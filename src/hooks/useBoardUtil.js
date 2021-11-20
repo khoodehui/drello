@@ -4,6 +4,7 @@ import useListUtil from './useListUtil'
 import { deleteBoard, newBoard, updateBoard } from '../reducers/boardsReducer'
 import useItemUtil from './useItemUtil'
 
+// hook that provides utility functions with respect to boards
 const useBoardUtil = () => {
   const boards = useSelector(state => state.boards)
   const dispatch = useDispatch()

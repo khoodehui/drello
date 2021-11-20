@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// reducer to manage the state of boards
 const boardsSlice = createSlice({
   name: 'boards',
   initialState: [],

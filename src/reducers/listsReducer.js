@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// reducer to manage the state of lists
 const listsSlice = createSlice({
   name: 'items',
   initialState: {},

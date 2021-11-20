@@ -18,6 +18,7 @@ const EditableTypography = ({
     }
   }
 
+  // save the change when focus is lost
   const handleOnBlur = event => {
     handleSaveChange(event.target.value)
     setIsEditing(false)

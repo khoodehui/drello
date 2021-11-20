@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteList, newList, updateList } from '../reducers/listsReducer'
 
+// hook that provides utility functions with respect to lists
 const useListUtil = () => {
   const lists = useSelector(state => state.lists)
   const dispatch = useDispatch()
