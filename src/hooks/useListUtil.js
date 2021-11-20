@@ -37,7 +37,7 @@ const useListUtil = () => {
 
   const addItemToList = (list, itemId) => {
     const newItemsList = list.items.concat(itemId)
-    const isDropDisabled = newItemsList.length === list.maxItems
+    const isDropDisabled = newItemsList.length >= list.maxItems
     const updatedList = { ...list, items: newItemsList, isDropDisabled }
     dispatch(updateList(updatedList))
   }
@@ -49,7 +49,11 @@ const useListUtil = () => {
   }
 
   const setListMaxItems = (list, newMax) => {
-    const updatedList = { ...list, maxItems: newMax }
+    const updatedList = {
+      ...list,
+      maxItems: newMax,
+      isDropDisabled: list.items.length >= newMax,
+    }
     dispatch(updateList(updatedList))
   }
 
@@ -60,7 +64,7 @@ const useListUtil = () => {
     const updatedList = {
       ...list,
       items: newItemsList,
-      isDropDisabled: newItemsList.length === list.maxItems,
+      isDropDisabled: newItemsList.length >= list.maxItems,
     }
     dispatch(updateList(updatedList))
   }
@@ -85,7 +89,7 @@ const useListUtil = () => {
     const updatedDestList = {
       ...destList,
       items: newDestListItems,
-      isDropDisabled: newDestListItems.length === destList.maxItems,
+      isDropDisabled: newDestListItems.length >= destList.maxItems,
     }
     dispatch(updateList(updatedSourceList))
     dispatch(updateList(updatedDestList))
