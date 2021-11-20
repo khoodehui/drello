@@ -9,7 +9,7 @@ const boardsSlice = createSlice({
       state.push(action.payload)
     },
     deleteBoard: (state, action) => {
-      return state.filter(board => board.id !== action.payload)
+      return state.filter(board => board.id !== action.payload.id)
     },
     updateBoard: (state, action) => {
       return state.map(board =>
@@ -19,9 +19,5 @@ const boardsSlice = createSlice({
   },
 })
 
-export const {
-  newBoard,
-  deleteBoard,
-  updateBoard,
-} = boardsSlice.actions
+export const { newBoard, deleteBoard, updateBoard } = boardsSlice.actions
 export default boardsSlice.reducer

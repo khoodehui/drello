@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { deleteBoard } from '../reducers/boardsReducer'
 import {
   Button,
   Card,
@@ -25,10 +23,11 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
 import BoardCardForm from './BoardCardForm'
+import useBoardUtil from '../hooks/useBoardUtil'
 
 const BoardCard = ({ board }) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const { removeBoard } = useBoardUtil()
 
   const [menuAnchor, setMenuAnchor] = useState(null)
   const [showDialog, setShowDialog] = useState(false)
@@ -44,6 +43,7 @@ const BoardCard = ({ board }) => {
   }
 
   const handleOpenBoard = () => navigate(`/${board.id}`)
+
   const handleDeleteBoard = () => {
     setMenuAnchor(null)
     setShowDialog(true)
@@ -53,7 +53,7 @@ const BoardCard = ({ board }) => {
 
   const handleDeleteConfirm = () => {
     setShowDialog(false)
-    dispatch(deleteBoard(board.id))
+    removeBoard(board)
   }
 
   if (editing) {
