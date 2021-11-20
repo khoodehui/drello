@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import Board from './components/Board'
 import useBoardUtil from './hooks/useBoardUtil'
+import DrelloAppBar from './components/DrelloAppBar'
 
 const App = () => {
   const { createSampleBoard } = useBoardUtil()
@@ -12,10 +13,13 @@ const App = () => {
   }
 
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/:id' element={<Board />} />
-    </Routes>
+    <>
+      <DrelloAppBar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/:id' element={<Board />} />
+      </Routes>
+    </>
   )
 }
 

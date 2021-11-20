@@ -1,4 +1,3 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Box, Stack, Typography } from '@mui/material'
 import { Droppable } from 'react-beautiful-dnd'
 import BoardListItem from './BoardListItem'
@@ -33,71 +32,69 @@ const BoardList = ({ listId }) => {
   return (
     <Droppable droppableId={list.id} isDropDisabled={list.isDropDisabled}>
       {provided => (
-        <ThemeProvider theme={createTheme()}>
-          <Box
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            sx={{
-              backgroundColor: theme => theme.palette.grey[100],
-              padding: 1,
-              margin: 1,
-            }}
-          >
-            <Stack direction='row' justifyContent='space-between'>
+        <Box
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          sx={{
+            backgroundColor: theme => theme.palette.grey[100],
+            p: 2,
+            mb: 4,
+          }}
+        >
+          <Stack direction='row' justifyContent='space-between'>
+            <EditableTypography
+              handleSaveChange={updateListName}
+              typographyProps={{
+                variant: 'h5',
+                component: 'h2',
+                fontWeight: 500,
+              }}
+            >
+              {list.name}
+            </EditableTypography>
+            <Box>
+              <Typography
+                variant='h5'
+                component='p'
+                fontWeight={500}
+                display='inline'
+              >
+                {`${list.items.length}/`}
+              </Typography>
               <EditableTypography
-                handleSaveChange={updateListName}
+                handleSaveChange={updateMaxItems}
+                textFieldProps={{
+                  variant: 'standard',
+                  type: 'number',
+                  InputProps: {
+                    inputProps: {
+                      min: list.items.length,
+                      sx: { width: 50 },
+                    },
+                  },
+                }}
                 typographyProps={{
                   variant: 'h5',
                   component: 'h2',
                   fontWeight: 500,
+                  display: 'inline',
                 }}
               >
-                {list.name}
+                {list.maxItems}
               </EditableTypography>
-              <Box>
-                <Typography
-                  variant='h5'
-                  component='p'
-                  fontWeight={500}
-                  display='inline'
-                >
-                  {`${list.items.length}/`}
-                </Typography>
-                <EditableTypography
-                  handleSaveChange={updateMaxItems}
-                  textFieldProps={{
-                    variant: 'standard',
-                    type: 'number',
-                    InputProps: {
-                      inputProps: {
-                        min: list.items.length,
-                        style: { width: 50 },
-                      },
-                    },
-                  }}
-                  typographyProps={{
-                    variant: 'h5',
-                    component: 'h2',
-                    fontWeight: 500,
-                    display: 'inline',
-                  }}
-                >
-                  {list.maxItems}
-                </EditableTypography>
-              </Box>
-            </Stack>
-            {list.items.map((itemId, index) => (
-              <BoardListItem
-                key={itemId}
-                itemId={itemId}
-                index={index}
-                list={list}
-              />
-            ))}
-            {provided.placeholder}
-            <AddItemBlock list={list} />
-          </Box>
-        </ThemeProvider>
+            </Box>
+          </Stack>
+          {list.items.map((itemId, index) => (
+            <BoardListItem
+              key={itemId}
+              itemId={itemId}
+              index={index}
+              list={list}
+            />
+          ))}
+          {provided.placeholder}
+          <AddItemBlock list={list} />
+        </Box>
       )}
     </Droppable>
   )

@@ -1,13 +1,15 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import BoardList from './BoardList'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { Container } from '@mui/material'
+import { Container, IconButton, Stack } from '@mui/material'
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import useBoardUtil from '../hooks/useBoardUtil'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
 
 const Board = () => {
   const id = useParams().id
+  const navigate = useNavigate()
   const { getBoardById, updateBoardInfo } = useBoardUtil()
   const { getListById, enableDrop, swapItemsInList, swapItemBetweenLists } =
     useListUtil()
@@ -20,6 +22,8 @@ const Board = () => {
   if (!board) {
     return null
   }
+  
+  const goHome = () => navigate('/')
 
   const updateBoardName = value => {
     if (value.length > 0) {
@@ -70,12 +74,17 @@ const Board = () => {
 
   return (
     <Container maxWidth='lg'>
+      <Stack direction='row' sx={{mt: 3, mb: 2}}>
+        <IconButton onClick={goHome}>
+          <ArrowBackIosNewIcon />
+        </IconButton>
       <EditableTypography
         handleSaveChange={updateBoardName}
-        typographyProps={{ variant: 'h4', component: 'h1' }}
+        typographyProps={{ variant: 'h4', component: 'h1'}}
       >
         {board.name}
       </EditableTypography>
+      </Stack>
       <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
         {board.lists.map(listId => (
           <BoardList key={listId} listId={listId} />

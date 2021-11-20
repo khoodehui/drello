@@ -1,4 +1,10 @@
-import { Button, Card, CardContent, IconButton, TextField } from '@mui/material'
+import {
+  Box,
+  Button,
+  IconButton,
+  Paper,
+  TextField,
+} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import { useState } from 'react'
@@ -47,7 +53,7 @@ const AddItemBlock = ({ list }) => {
         disabled={list.items.length >= list.maxItems}
         startIcon={<AddIcon />}
         onClick={handleToggleAdd}
-        style={{ marginTop: 8 }}
+        sx={{ mt: 2 }}
       >
         New Item
       </Button>
@@ -55,26 +61,24 @@ const AddItemBlock = ({ list }) => {
   }
 
   return (
-    <>
-      <Card variant='outlined' style={{ marginTop: 8, marginBottom: 8 }}>
-        <CardContent>
-          <TextField
-            autoFocus
-            placeholder='Item Content'
-            value={content}
-            onChange={handleContentChange}
-            onKeyDown={handleKeyDown}
-            onBlur={handleOnBlur}
-          />
-        </CardContent>
-      </Card>
+    <Box>
+      <Paper variant='outlined' sx={{ mt: 1, mb: 1, p: 1, pt: 2, pb: 2 }}>
+        <TextField
+          autoFocus
+          placeholder='Item Content'
+          value={content}
+          onChange={handleContentChange}
+          onKeyDown={handleKeyDown}
+          onBlur={handleOnBlur}
+        />
+      </Paper>
       <Button variant='contained' disabled={isAddDisabled} onClick={addItem}>
         Add Item
       </Button>
       <IconButton>
         <CloseIcon />
       </IconButton>
-    </>
+    </Box>
   )
 }
 

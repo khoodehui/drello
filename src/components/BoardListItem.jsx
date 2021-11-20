@@ -1,4 +1,4 @@
-import { Card, CardContent, IconButton, Stack } from '@mui/material'
+import { IconButton, Paper, Stack } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import { Draggable } from 'react-beautiful-dnd'
 import useItemUtil from '../hooks/useItemUtil'
@@ -24,14 +24,13 @@ const BoardListItem = ({ list, itemId, index }) => {
   return (
     <Draggable draggableId={item.id} index={index}>
       {provided => (
-        <Card
+        <Paper
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={{ marginTop: 8, ...provided.draggableProps.style }}
+          sx={{ mt: 1, p: 1, pl: 2 }}
         >
-          <CardContent>
-            <Stack direction='row' justifyContent='space-between'>
+            <Stack direction='row' justifyContent='space-between' alignItems='center'>
               <EditableTypography handleSaveChange={changeContent}>
                 {item.content}
               </EditableTypography>
@@ -39,8 +38,7 @@ const BoardListItem = ({ list, itemId, index }) => {
                 <ClearIcon />
               </IconButton>
             </Stack>
-          </CardContent>
-        </Card>
+        </Paper>
       )}
     </Draggable>
   )

@@ -44,8 +44,8 @@ const EditableTypography = ({
     return (
       <Typography
         onClick={handleToggleEdit}
-        style={{ cursor: 'pointer' }}
         {...typographyProps}
+        sx={{ cursor: 'pointer', ...typographyProps?.sx }}
       >
         {children}
       </Typography>

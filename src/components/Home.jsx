@@ -8,15 +8,20 @@ const Home = () => {
 
   return (
     <main>
-      <Typography variant='h3' align='center' component='h1'>
-        Home
+      <Typography
+        variant='h3'
+        align='center'
+        component='h1'
+        sx={{ mt: 4, mb: 4 }}
+      >
+        Boards
       </Typography>
       <Container maxWidth='md'>
         <Grid container spacing={4}>
-        {boards.map(board => (
-          <BoardCard key={board.id} board={board} />
-        ))}
-        <NewBoardCard />
+          {boards.map(board => (
+            <BoardCard key={board.id} board={board} />
+          ))}
+          <NewBoardCard />
         </Grid>
       </Container>
     </main>
