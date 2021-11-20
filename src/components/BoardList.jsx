@@ -4,6 +4,7 @@ import { Droppable } from 'react-beautiful-dnd'
 import BoardListItem from './BoardListItem'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
+import AddItemBlock from './AddItemBlock'
 
 const BoardList = ({ listId }) => {
   const { getListById, renameList, setListMaxItems } = useListUtil()
@@ -67,7 +68,12 @@ const BoardList = ({ listId }) => {
                   textFieldProps={{
                     variant: 'standard',
                     type: 'number',
-                    InputProps: { inputProps: { min: list.items.length } },
+                    InputProps: {
+                      inputProps: {
+                        min: list.items.length,
+                        style: { width: 50 },
+                      },
+                    },
                   }}
                   typographyProps={{
                     variant: 'h5',
@@ -84,6 +90,7 @@ const BoardList = ({ listId }) => {
               <BoardListItem key={itemId} itemId={itemId} index={index} />
             ))}
             {provided.placeholder}
+            <AddItemBlock list={list} />
           </Box>
         </ThemeProvider>
       )}

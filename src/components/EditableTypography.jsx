@@ -5,7 +5,7 @@ const EditableTypography = ({
   handleSaveChange,
   textFieldProps,
   typographyProps,
-  children
+  children,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const handleToggleEdit = () => setIsEditing(true)
@@ -16,7 +16,7 @@ const EditableTypography = ({
 
   // allows input to be saved by pressing enter or escape keys
   const handleKeyDown = event => {
-    if (event.key === 'Enter' || event.key === 'Escape' || event.key === 'GoBack') {
+    if (event.key === 'Enter' || event.key === 'Escape') {
       event.target.blur()
     }
   }
@@ -44,7 +44,7 @@ const EditableTypography = ({
     return (
       <Typography
         onClick={handleToggleEdit}
-        style={{cursor: 'pointer'}}
+        style={{ cursor: 'pointer' }}
         {...typographyProps}
       >
         {children}
