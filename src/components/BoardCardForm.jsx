@@ -29,9 +29,9 @@ const BoardCardForm = props => {
     event.preventDefault()
 
     if (props.type === 'create') {
-      createBoard(name, desc)
+      createBoard(name.trim(), desc.trim())
     } else {
-      updateBoardInfo(props.board, name, desc)
+      updateBoardInfo(props.board, name.trim(), desc.trim())
     }
 
     props.setEditing(false)
@@ -41,8 +41,8 @@ const BoardCardForm = props => {
   // if editing, disable if no changes is made to name or desc
   const disableSubmit =
     props.type === 'create'
-      ? name === ''
-      : name === props.board.name && desc === props.board.desc
+      ? name.trim() === ''
+      : name.trim() === props.board.name && desc.trim() === props.board.desc
 
   const handleCancel = () => props.setEditing(false)
 
@@ -69,7 +69,7 @@ const BoardCardForm = props => {
               size='small'
               value={desc}
               onChange={handleDescChange}
-              sx={{width: '100%'}}
+              sx={{ width: '100%' }}
             />
           </CardContent>
           <CardActions>
