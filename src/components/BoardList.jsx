@@ -92,10 +92,10 @@ const BoardList = ({ listId }) => {
               />
             ))}
             {provided.placeholder}
-            <AddItemBlock list={list} />
           </Box>
         )}
       </Droppable>
+      <AddItemBlock list={list} />
     </Box>
   )
 }
