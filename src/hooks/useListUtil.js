@@ -15,6 +15,8 @@ const useListUtil = () => {
       id: uuid(),
       name,
       items: [],
+      maxItems: 5,
+      isDropDisabled: false,
     }
     dispatch(newList(list))
     return list
@@ -27,9 +29,15 @@ const useListUtil = () => {
     dispatch(updateList(updatedList))
   }
 
+  const enableDrop = list => {
+    const updatedList = { ...list, isDropDisabled: false }
+    dispatch(updateList(updatedList))
+  }
+
   const addItemToList = (list, itemId) => {
     const newItemsList = list.items.concat(itemId)
-    const updatedList = { ...list, items: newItemsList }
+    const isDropDisabled = newItemsList.length === list.maxItems
+    const updatedList = { ...list, items: newItemsList, isDropDisabled }
     dispatch(updateList(updatedList))
   }
 
@@ -39,23 +47,45 @@ const useListUtil = () => {
     dispatch(updateList(updatedList))
   }
 
+  const setListMaxItems = (list, newMax) => {
+    const updatedList = { ...list, maxItems: newMax }
+    dispatch(updateList(updatedList))
+  }
+
   const swapItemsInList = (list, sourceIndex, destIndex) => {
     const newItemsList = Array.from(list.items)
     const [item] = newItemsList.splice(sourceIndex, 1)
     newItemsList.splice(destIndex, 0, item)
-    const updatedList = { ...list, items: newItemsList }
+    const updatedList = {
+      ...list,
+      items: newItemsList,
+      isDropDisabled: newItemsList.length === list.maxItems,
+    }
     dispatch(updateList(updatedList))
   }
 
-  const swapItemBetweenLists = (sourceList, destList, sourceIndex, destIndex) => {
+  const swapItemBetweenLists = (
+    sourceList,
+    destList,
+    sourceIndex,
+    destIndex
+  ) => {
     const newSourceListItems = Array.from(sourceList.items)
     const newDestListItems = Array.from(destList.items)
 
     const [item] = newSourceListItems.splice(sourceIndex, 1)
-    newDestListItems.splice(destIndex, 0 , item)
+    newDestListItems.splice(destIndex, 0, item)
 
-    const updatedSourceList = { ...sourceList, items: newSourceListItems }
-    const updatedDestList = { ...destList, items: newDestListItems }
+    const updatedSourceList = {
+      ...sourceList,
+      items: newSourceListItems,
+      isDropDisabled: false,
+    }
+    const updatedDestList = {
+      ...destList,
+      items: newDestListItems,
+      isDropDisabled: newDestListItems.length === destList.maxItems,
+    }
     dispatch(updateList(updatedSourceList))
     dispatch(updateList(updatedDestList))
   }
@@ -66,10 +96,12 @@ const useListUtil = () => {
     createList,
     removeList,
     renameList,
+    enableDrop,
     addItemToList,
     removeItemFromList,
+    setListMaxItems,
     swapItemsInList,
-    swapItemBetweenLists
+    swapItemBetweenLists,
   }
 }
 

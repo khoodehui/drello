@@ -8,11 +8,16 @@ import useListUtil from '../hooks/useListUtil'
 const Board = () => {
   const id = useParams().id
   const { getBoardById } = useBoardUtil()
-  const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
+  const { getListById, enableDrop, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
 
   if (!board) {
     return null
+  }
+
+  const onDragStart = start => {
+    const { source } = start
+    enableDrop(getListById(source.droppableId))
   }
 
   const onDragEnd = result => {
@@ -34,7 +39,6 @@ const Board = () => {
     } else {
       swapItemBetweenLists(getListById(source.droppableId), getListById(destination.droppableId), source.index, destination.index)
     }
-
   }
 
   return (
@@ -42,7 +46,7 @@ const Board = () => {
       <Typography variant='h4' component='h1'>
         {board.name}
       </Typography>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
         {board.lists.map(listId => (
           <BoardList key={listId} listId={listId} />
         ))}
