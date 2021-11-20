@@ -30,73 +30,73 @@ const BoardList = ({ listId }) => {
   }
 
   return (
-    <Droppable droppableId={list.id} isDropDisabled={list.isDropDisabled}>
-      {provided => (
-        <Box
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          sx={{
-            backgroundColor: theme => theme.palette.grey[100],
-            p: 2,
-            mb: 4,
+    <Box
+      sx={{
+        backgroundColor: theme => theme.palette.grey[100],
+        p: 2,
+        mb: 4,
+      }}
+    >
+      <Stack direction='row' justifyContent='space-between'>
+        <EditableTypography
+          handleSaveChange={updateListName}
+          typographyProps={{
+            variant: 'h5',
+            component: 'h2',
+            fontWeight: 500,
           }}
         >
-          <Stack direction='row' justifyContent='space-between'>
-            <EditableTypography
-              handleSaveChange={updateListName}
-              typographyProps={{
-                variant: 'h5',
-                component: 'h2',
-                fontWeight: 500,
-              }}
-            >
-              {list.name}
-            </EditableTypography>
-            <Box>
-              <Typography
-                variant='h5'
-                component='p'
-                fontWeight={500}
-                display='inline'
-              >
-                {`${list.items.length}/`}
-              </Typography>
-              <EditableTypography
-                handleSaveChange={updateMaxItems}
-                textFieldProps={{
-                  variant: 'standard',
-                  type: 'number',
-                  InputProps: {
-                    inputProps: {
-                      min: list.items.length,
-                      sx: { width: 50 },
-                    },
-                  },
-                }}
-                typographyProps={{
-                  variant: 'h5',
-                  component: 'h2',
-                  fontWeight: 500,
-                  display: 'inline',
-                }}
-              >
-                {list.maxItems}
-              </EditableTypography>
-            </Box>
-          </Stack>
-          {list.items.map((itemId, index) => (
-            <BoardListItem
-              key={itemId}
-              itemId={itemId}
-              index={index}
-              list={list}
-            />
-          ))}
-          {provided.placeholder}
-          <AddItemBlock list={list} />
+          {list.name}
+        </EditableTypography>
+        <Box>
+          <Typography
+            variant='h5'
+            component='p'
+            fontWeight={500}
+            display='inline'
+          >
+            {`${list.items.length}/`}
+          </Typography>
+          <EditableTypography
+            handleSaveChange={updateMaxItems}
+            textFieldProps={{
+              variant: 'standard',
+              type: 'number',
+              InputProps: {
+                inputProps: {
+                  min: list.items.length,
+                  sx: { width: 50 },
+                },
+              },
+            }}
+            typographyProps={{
+              variant: 'h5',
+              component: 'h2',
+              fontWeight: 500,
+              display: 'inline',
+            }}
+          >
+            {list.maxItems}
+          </EditableTypography>
         </Box>
-      )}
-    </Droppable>
+      </Stack>
+      <Droppable droppableId={list.id} isDropDisabled={list.isDropDisabled}>
+        {provided => (
+          <Box ref={provided.innerRef} {...provided.droppableProps}>
+            {list.items.map((itemId, index) => (
+              <BoardListItem
+                key={itemId}
+                itemId={itemId}
+                index={index}
+                list={list}
+              />
+            ))}
+            {provided.placeholder}
+            <AddItemBlock list={list} />
+          </Box>
+        )}
+      </Droppable>
+    </Box>
   )
 }
 
