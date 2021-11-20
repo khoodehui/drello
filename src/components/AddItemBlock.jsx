@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Paper,
-  TextField,
-} from '@mui/material'
+import { Box, Button, IconButton, Paper, TextField } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import { useState } from 'react'
@@ -72,10 +66,16 @@ const AddItemBlock = ({ list }) => {
           onBlur={handleOnBlur}
         />
       </Paper>
-      <Button variant='contained' disabled={isAddDisabled} onClick={addItem}>
+      <Button
+        variant='contained'
+        disabled={isAddDisabled}
+        // prevents textfield from losing focus when button is pressed
+        onMouseDown={e => e.preventDefault()}
+        onClick={addItem}
+      >
         Add Item
       </Button>
-      <IconButton>
+      <IconButton onClick={stopAdding}>
         <CloseIcon />
       </IconButton>
     </Box>
