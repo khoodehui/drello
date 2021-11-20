@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import useBoardUtil from '../hooks/useBoardUtil'
+import { useNavigate } from 'react-router'
 
 const BoardCardForm = props => {
   // if creating, use empty name and desc
@@ -21,6 +22,7 @@ const BoardCardForm = props => {
   )
 
   const { createBoard, updateBoardInfo } = useBoardUtil()
+  const navigate = useNavigate()
 
   const handleNameChange = event => setName(event.target.value)
   const handleDescChange = event => setDesc(event.target.value)
@@ -29,7 +31,8 @@ const BoardCardForm = props => {
     event.preventDefault()
 
     if (props.type === 'create') {
-      createBoard(name.trim(), desc.trim())
+      const id = createBoard(name.trim(), desc.trim()).id
+      navigate(`/${id}`)
     } else {
       updateBoardInfo(props.board, name.trim(), desc.trim())
     }
