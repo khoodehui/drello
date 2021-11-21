@@ -48,12 +48,11 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
     >
       <Stack direction='row' justifyContent='space-between'>
         <EditableTypography
+          inputType='text'
+          typographyVariant='h5'
+          typographyComponent='h2'
+          fontWeight='medium'
           handleSaveChange={updateListName}
-          typographyProps={{
-            variant: 'h5',
-            component: 'h2',
-            fontWeight: 500,
-          }}
         >
           {list.name}
         </EditableTypography>
@@ -67,22 +66,18 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
             {`${list.items.length}/`}
           </Typography>
           <EditableTypography
+            inputType='number'
+            typographyVariant='h5'
+            typographyComponent='h2'
+            fontWeight='medium'
             handleSaveChange={updateMaxItems}
-            textFieldProps={{
-              variant: 'standard',
-              type: 'number',
+            otherTextFieldProps={{
               InputProps: {
                 inputProps: {
                   min: list.items.length,
-                  sx: { width: 50 },
                 },
+                sx: { width: 50 },
               },
-            }}
-            typographyProps={{
-              variant: 'h5',
-              component: 'h2',
-              fontWeight: 500,
-              display: 'inline',
             }}
           >
             {list.maxItems}

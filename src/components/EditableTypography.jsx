@@ -2,12 +2,30 @@ import { TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 
 const EditableTypography = ({
+  inputType,
+  typographyVariant,
+  typographyComponent,
+  fontWeight,
   handleSaveChange,
-  textFieldProps,
-  typographyProps,
+  otherTextFieldProps,
+  otherTypographyProps,
   children,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
+
+  const getTextFieldStyle = theme => {
+    const typographyStyle = theme.typography[typographyVariant]
+    const fontWeightStyle = fontWeight
+      ? theme.typography[
+          `fontWeight${
+            fontWeight[0].toUpperCase() + fontWeight.slice(1).toLowerCase()
+          }`
+        ]
+      : {}
+    console.log(fontWeightStyle)
+    return { ...typographyStyle, fontWeight: fontWeightStyle }
+  }
+
   const handleToggleEdit = () => setIsEditing(true)
 
   const handleOnFocus = event => {
@@ -30,6 +48,7 @@ const EditableTypography = ({
   if (isEditing) {
     return (
       <TextField
+        type={inputType}
         variant='standard'
         autoComplete='off'
         autoFocus
@@ -37,15 +56,26 @@ const EditableTypography = ({
         onFocus={handleOnFocus}
         onKeyDown={handleKeyDown}
         onBlur={handleOnBlur}
-        {...textFieldProps}
+        {...otherTextFieldProps}
+        InputProps={{
+          ...otherTextFieldProps?.InputProps,
+          sx: theme => ({
+            ...getTextFieldStyle(theme),
+            ...otherTextFieldProps?.InputProps?.sx,
+          }),
+        }}
       />
     )
   } else {
     return (
       <Typography
+        display='inline'
+        variant={typographyVariant}
+        component={typographyComponent}
+        fontWeight={fontWeight}
         onClick={handleToggleEdit}
-        {...typographyProps}
-        sx={{ cursor: 'pointer', ...typographyProps?.sx }}
+        {...otherTypographyProps}
+        sx={{ cursor: 'pointer', ...otherTypographyProps?.sx }}
       >
         {children}
       </Typography>

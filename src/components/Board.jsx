@@ -12,8 +12,7 @@ const Board = () => {
   const id = useParams().id
   const navigate = useNavigate()
   const { getBoardById, updateBoardInfo } = useBoardUtil()
-  const { getListById, swapItemsInList, swapItemBetweenLists } =
-    useListUtil()
+  const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
 
   /*
@@ -84,8 +83,10 @@ const Board = () => {
           <ArrowBackIosNewIcon />
         </IconButton>
         <EditableTypography
+          inputType='text'
+          typographyVariant='h4'
+          typographyComponent='h1'
           handleSaveChange={updateBoardName}
-          typographyProps={{ variant: 'h4', component: 'h1' }}
         >
           {board.name}
         </EditableTypography>
