@@ -12,7 +12,7 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
   /* 
   Dropping for a list is clearly enabled if the number of items in it is less than its item limit.
   However, if a list has max items, we still want to allow items to be dragged and dropped within it.
-  Hence if the source list of the dragged item is itself, dragging is enabled.
+  Hence if the source list of the dragged item is itself, dropping is enabled for it.
   */
   const isDropDisabled = !(
     isSrcDroppableSelf || list.items.length !== list.maxItems
