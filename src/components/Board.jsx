@@ -7,6 +7,7 @@ import useBoardUtil from '../hooks/useBoardUtil'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
 import { useRef, useState } from 'react'
+import AddListBlock from './AddListBlock'
 
 const Board = () => {
   const id = useParams().id
@@ -101,6 +102,7 @@ const Board = () => {
             />
           ))}
         </DragDropContext>
+        <AddListBlock board={board} />
       </Box>
     </Container>
   )
