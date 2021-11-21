@@ -23,7 +23,7 @@ const EditableTypography = ({
         ]
       : {}
     console.log(fontWeightStyle)
-    return { ...typographyStyle, fontWeight: fontWeightStyle }
+    return { ...typographyStyle, fontWeight: fontWeightStyle, p: 0 }
   }
 
   const handleToggleEdit = () => setIsEditing(true)
@@ -48,6 +48,7 @@ const EditableTypography = ({
   if (isEditing) {
     return (
       <TextField
+        size='small'
         type={inputType}
         variant='standard'
         autoComplete='off'
