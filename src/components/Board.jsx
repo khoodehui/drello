@@ -2,18 +2,26 @@ import { useParams, useNavigate } from 'react-router-dom'
 import BoardList from './BoardList'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { Container, IconButton, Stack } from '@mui/material'
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import useBoardUtil from '../hooks/useBoardUtil'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
+import { useState } from 'react'
 
 const Board = () => {
   const id = useParams().id
   const navigate = useNavigate()
   const { getBoardById, updateBoardInfo } = useBoardUtil()
-  const { getListById, enableDrop, swapItemsInList, swapItemBetweenLists } =
+  const { getListById, swapItemsInList, swapItemBetweenLists } =
     useListUtil()
   const board = getBoardById(id)
+
+  /*
+  Keeps track of the index of the source list when an item is dragged.
+  Used to still allow dragging and dropping within a list even when it has max items.
+  See the variable isDropDisabled in BoardList.jsx for more info.
+  */
+  const [srcDroppableIndex, setSrcDroppableIndex] = useState(null)
 
   /*
   The board variable may take a moment to initialise. When it does not have a value
@@ -22,7 +30,7 @@ const Board = () => {
   if (!board) {
     return null
   }
-  
+
   const goHome = () => navigate('/')
 
   const updateBoardName = value => {
@@ -31,18 +39,15 @@ const Board = () => {
     }
   }
 
-  /* 
-  In the case when a list already has maximum items, this will allow items to still 
-  be dragged and dropped within that list. The correct value for isDropDisabled for 
-  the list will be restored when the drag and drop operation completes.
-  */
+  // updates the index of the source list when a drag operation begins
   const onDragStart = start => {
-    const { source } = start
-    enableDrop(getListById(source.droppableId))
+    setSrcDroppableIndex(board.lists.indexOf(start.source.droppableId))
   }
 
-  // Updates the state(s) of the involved list(s) at the end of a drag and drop operation
+  // updates the state(s) of the involved list(s) at the end of a drag and drop operation
   const onDragEnd = result => {
+    setSrcDroppableIndex(null)
+
     const { source, destination } = result
 
     if (!destination) {
@@ -74,20 +79,24 @@ const Board = () => {
 
   return (
     <Container maxWidth='lg'>
-      <Stack direction='row' sx={{mt: 3, mb: 2}}>
+      <Stack direction='row' sx={{ mt: 3, mb: 2 }}>
         <IconButton onClick={goHome}>
           <ArrowBackIosNewIcon />
         </IconButton>
-      <EditableTypography
-        handleSaveChange={updateBoardName}
-        typographyProps={{ variant: 'h4', component: 'h1'}}
-      >
-        {board.name}
-      </EditableTypography>
+        <EditableTypography
+          handleSaveChange={updateBoardName}
+          typographyProps={{ variant: 'h4', component: 'h1' }}
+        >
+          {board.name}
+        </EditableTypography>
       </Stack>
       <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-        {board.lists.map(listId => (
-          <BoardList key={listId} listId={listId} />
+        {board.lists.map((listId, index) => (
+          <BoardList
+            key={listId}
+            listId={listId}
+            isSrcDroppableSelf={srcDroppableIndex === index}
+          />
         ))}
       </DragDropContext>
     </Container>

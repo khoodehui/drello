@@ -17,7 +17,6 @@ const useListUtil = () => {
       name,
       items: [],
       maxItems: 5,
-      isDropDisabled: false,
     }
     dispatch(newList(list))
     return list
@@ -31,14 +30,13 @@ const useListUtil = () => {
   }
 
   const enableDrop = list => {
-    const updatedList = { ...list, isDropDisabled: false }
+    const updatedList = { ...list }
     dispatch(updateList(updatedList))
   }
 
   const addItemToList = (list, itemId) => {
     const newItemsList = list.items.concat(itemId)
-    const isDropDisabled = newItemsList.length >= list.maxItems
-    const updatedList = { ...list, items: newItemsList, isDropDisabled }
+    const updatedList = { ...list, items: newItemsList }
     dispatch(updateList(updatedList))
   }
 
@@ -52,7 +50,6 @@ const useListUtil = () => {
     const updatedList = {
       ...list,
       maxItems: newMax,
-      isDropDisabled: list.items.length >= newMax,
     }
     dispatch(updateList(updatedList))
   }
@@ -64,7 +61,6 @@ const useListUtil = () => {
     const updatedList = {
       ...list,
       items: newItemsList,
-      isDropDisabled: newItemsList.length >= list.maxItems,
     }
     dispatch(updateList(updatedList))
   }
@@ -84,12 +80,10 @@ const useListUtil = () => {
     const updatedSourceList = {
       ...sourceList,
       items: newSourceListItems,
-      isDropDisabled: false,
     }
     const updatedDestList = {
       ...destList,
       items: newDestListItems,
-      isDropDisabled: newDestListItems.length >= destList.maxItems,
     }
     dispatch(updateList(updatedSourceList))
     dispatch(updateList(updatedDestList))

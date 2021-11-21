@@ -5,9 +5,18 @@ import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
 import AddItemBlock from './AddItemBlock'
 
-const BoardList = ({ listId }) => {
+const BoardList = ({ listId, isSrcDroppableSelf }) => {
   const { getListById, renameList, setListMaxItems } = useListUtil()
   const list = getListById(listId)
+
+  /* 
+  Dropping for a list is clearly enabled if the number of items in it is less than its item limit.
+  However, if a list has max items, we still want to allow items to be dragged and dropped within it.
+  Hence if the source list of the dragged item is itself, dragging is enabled.
+  */
+  const isDropDisabled = !(
+    isSrcDroppableSelf || list.items.length !== list.maxItems
+  )
 
   const updateListName = value => {
     if (value.length > 0) {
@@ -80,7 +89,7 @@ const BoardList = ({ listId }) => {
           </EditableTypography>
         </Box>
       </Stack>
-      <Droppable droppableId={list.id} isDropDisabled={list.isDropDisabled}>
+      <Droppable droppableId={list.id} isDropDisabled={isDropDisabled}>
         {provided => (
           <Box ref={provided.innerRef} {...provided.droppableProps}>
             {list.items.map((itemId, index) => (
