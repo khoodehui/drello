@@ -15,7 +15,7 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
   Hence if the source list of the dragged item is itself, dropping is enabled for it.
   */
   const isDropDisabled = !(
-    isSrcDroppableSelf || list.items.length !== list.maxItems
+    isSrcDroppableSelf || list.items.length < list.maxItems
   )
 
   const updateListName = value => {
@@ -90,7 +90,15 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
       </Stack>
       <Droppable droppableId={list.id} isDropDisabled={isDropDisabled}>
         {provided => (
-          <Box ref={provided.innerRef} {...provided.droppableProps}>
+          <Box
+          /*
+          the minHeight is to prevent the droppable from being 'disappearing' when the list has 
+          no items so that items can still be dropped in the list
+          */
+            minHeight='1px'
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
             {list.items.map((itemId, index) => (
               <BoardListItem
                 key={itemId}
