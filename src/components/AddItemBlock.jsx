@@ -56,7 +56,7 @@ const AddItemBlock = ({ list }) => {
 
   return (
     <Box>
-      <Paper variant='outlined' sx={{ mt: 1, mb: 1, p: 1, pt: 2, pb: 2 }}>
+      <Paper variant='outlined' sx={{ mt: 1, mb: 1, p: 1.5}}>
         <TextField
           autoFocus
           placeholder='Item Content'
@@ -64,6 +64,7 @@ const AddItemBlock = ({ list }) => {
           onChange={handleContentChange}
           onKeyDown={handleKeyDown}
           onBlur={handleOnBlur}
+          sx={{width: 1}}
         />
       </Paper>
       <Button
