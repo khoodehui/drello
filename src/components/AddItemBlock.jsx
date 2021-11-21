@@ -75,7 +75,7 @@ const AddItemBlock = ({ list }) => {
       >
         Add Item
       </Button>
-      <IconButton onClick={stopAdding}>
+      <IconButton onMouseDown={e => e.preventDefault()} onClick={stopAdding}>
         <CloseIcon />
       </IconButton>
     </Box>
