@@ -40,10 +40,16 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
 
   return (
     <Box
+      display='inline-block'
+      whiteSpace='nowrap'
       sx={{
         backgroundColor: theme => theme.palette.grey[100],
         p: 2,
-        mb: 4,
+        ml: 2,
+        mb: 2,
+        verticalAlign: 'top',
+        width: 300,
+        maxWidth: 0.75,
       }}
     >
       <Stack direction='row' justifyContent='space-between'>

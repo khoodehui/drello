@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import BoardList from './BoardList'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { Container, IconButton, Stack } from '@mui/material'
+import { Box, Container, IconButton, Stack } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import useBoardUtil from '../hooks/useBoardUtil'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const Board = () => {
   const id = useParams().id
@@ -14,6 +14,7 @@ const Board = () => {
   const { getBoardById, updateBoardInfo } = useBoardUtil()
   const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
+  const ref = useRef()
 
   /*
   Keeps track of the index of the source list when an item is dragged.
@@ -75,10 +76,9 @@ const Board = () => {
       )
     }
   }
-
   return (
-    <Container maxWidth='lg'>
-      <Stack direction='row' sx={{ mt: 3, mb: 2 }}>
+    <Container maxWidth='xl'>
+      <Stack ref={ref} direction='row' sx={{ mt: 3, mb: 2 }}>
         <IconButton onClick={goHome}>
           <ArrowBackIosNewIcon />
         </IconButton>
@@ -91,15 +91,17 @@ const Board = () => {
           {board.name}
         </EditableTypography>
       </Stack>
-      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-        {board.lists.map((listId, index) => (
-          <BoardList
-            key={listId}
-            listId={listId}
-            isSrcDroppableSelf={srcDroppableIndex === index}
-          />
-        ))}
-      </DragDropContext>
+      <Box id='lists' whiteSpace='nowrap' sx={{ overflowX: 'scroll' }}>
+        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+          {board.lists.map((listId, index) => (
+            <BoardList
+              key={listId}
+              listId={listId}
+              isSrcDroppableSelf={srcDroppableIndex === index}
+            />
+          ))}
+        </DragDropContext>
+      </Box>
     </Container>
   )
 }
