@@ -34,7 +34,7 @@ const EditableTypography = ({
 
   // allows input to be saved by pressing enter or escape keys
   const handleKeyDown = event => {
-    if (event.key === 'Enter' || event.key === 'Escape') {
+    if ((event.key === 'Enter' && !event.shiftKey) || event.key === 'Escape') {
       event.target.blur()
     }
   }

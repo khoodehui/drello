@@ -35,12 +35,12 @@ const BoardListItem = ({ list, itemId, index }) => {
             justifyContent='space-between'
             alignItems='center'
           >
-            <Box sx={{ whiteSpace: 'normal' }} maxWidth={0.85}>
+            <Box sx={{ whiteSpace: 'normal' }} width={0.85}>
               <EditableTypography
                 handleSaveChange={changeContent}
                 otherTextFieldProps={{ multiline: true, sx: { width: 1 } }}
                 otherTypographyProps={{
-                  sx: { wordWrap: 'break-word' },
+                  sx: { wordWrap: 'break-word', whiteSpace: 'pre-wrap' },
                 }}
               >
                 {item.content}

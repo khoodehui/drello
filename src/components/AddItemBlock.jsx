@@ -22,7 +22,10 @@ const AddItemBlock = ({ list }) => {
   }
 
   const handleKeyDown = event => {
-    if (event.key === 'Enter' && !isAddDisabled) {
+    // allows submit using shift + enter
+    if (event.key === 'Enter' && !event.shiftKey && !isAddDisabled) {
+      // prevent textfield focus loss
+      event.preventDefault()
       addItem()
     } else if (event.key === 'Escape') {
       stopAdding()
@@ -59,6 +62,7 @@ const AddItemBlock = ({ list }) => {
       <Paper variant='outlined' sx={{ mt: 1, mb: 1, p: 1.5}}>
         <TextField
           autoFocus
+          multiline
           placeholder='Item Content'
           value={content}
           onChange={handleContentChange}

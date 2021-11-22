@@ -67,6 +67,7 @@ const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
         display: 'inline-block',
         p: 2,
         ml: 2,
+        mb: 2,
         verticalAlign: 'top',
         width: 375,
         maxWidth: 0.75,
@@ -113,7 +114,7 @@ const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
           >
             {list.maxItems}
           </EditableTypography>
-          <IconButton onClick={handleOpenMenu}>
+          <IconButton onClick={handleOpenMenu} sx={{mr: -1}}>
             <MoreVert />
           </IconButton>
           <Menu
