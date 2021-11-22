@@ -1,11 +1,12 @@
 import { Box, IconButton, Paper, Stack } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import { Draggable } from 'react-beautiful-dnd'
+import React from 'react'
 import useItemUtil from '../hooks/useItemUtil'
 import EditableTypography from './EditableTypography'
 import useListUtil from '../hooks/useListUtil'
 
-const BoardListItem = ({ list, itemId, index }) => {
+const BoardListItem = React.memo(({ list, itemId, index }) => {
   const { getItemById, removeItem, updateItemContent } = useItemUtil()
   const { removeItemFromList } = useListUtil()
   const item = getItemById(itemId)
@@ -54,6 +55,6 @@ const BoardListItem = ({ list, itemId, index }) => {
       )}
     </Draggable>
   )
-}
+})
 
 export default BoardListItem

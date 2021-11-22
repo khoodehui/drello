@@ -1,11 +1,11 @@
 import { Box, Button, IconButton, Paper, TextField } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import useItemUtil from '../hooks/useItemUtil'
 import useListUtil from '../hooks/useListUtil'
 
-const AddItemBlock = ({ list }) => {
+const AddItemBlock = React.memo(({ list }) => {
   const [isAdding, setIsAdding] = useState(false)
   const [content, setContent] = useState('')
   const { addItemToList } = useListUtil()
@@ -63,7 +63,7 @@ const AddItemBlock = ({ list }) => {
         <TextField
           autoFocus
           multiline
-          placeholder='Item Content'
+          placeholder='Item content'
           value={content}
           onChange={handleContentChange}
           onKeyDown={handleKeyDown}
@@ -85,6 +85,6 @@ const AddItemBlock = ({ list }) => {
       </IconButton>
     </Box>
   )
-}
+})
 
 export default AddItemBlock

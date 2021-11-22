@@ -9,10 +9,10 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import useListUtil from '../hooks/useListUtil'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import useBoardUtil from '../hooks/useBoardUtil'
 
-const AddListBlock = ({ board }) => {
+const AddListBlock = React.memo(({ board }) => {
   const [isAdding, setIsAdding] = useState(false)
   const [listName, setListName] = useState('')
   const { createList } = useListUtil()
@@ -104,6 +104,6 @@ const AddListBlock = ({ board }) => {
       </IconButton>
     </Box>
   )
-}
+})
 
 export default AddListBlock

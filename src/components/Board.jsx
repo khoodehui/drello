@@ -105,31 +105,31 @@ const Board = () => {
           {board.name}
         </EditableTypography>
       </Stack>
-      <Box id='lists' whiteSpace='nowrap' sx={{ overflowX: 'scroll' }}>
-        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-          <Droppable droppableId={board.id} type='board' direction='horizontal'>
-            {provided => (
-              <Box
-                display='inline-block'
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {board.lists.map((listId, index) => (
-                  <BoardList
-                    key={listId}
-                    listId={listId}
-                    index={index}
-                    board={board}
-                    isSrcDroppableSelf={srcDroppableIndex === index}
-                  />
-                ))}
-                {provided.placeholder}
-              </Box>
-            )}
-          </Droppable>
-        </DragDropContext>
-        <AddListBlock board={board} />
-      </Box>
+      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <Droppable droppableId={board.id} type='board' direction='horizontal'>
+          {provided => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              id='lists'
+              whiteSpace='nowrap'
+              sx={{ overflowX: 'scroll' }}
+            >
+              {board.lists.map((listId, index) => (
+                <BoardList
+                  key={listId}
+                  listId={listId}
+                  index={index}
+                  board={board}
+                  isSrcDroppableSelf={srcDroppableIndex === index}
+                />
+              ))}
+              {provided.placeholder}
+              <AddListBlock board={board} />
+            </Box>
+          )}
+        </Droppable>
+      </DragDropContext>
     </Container>
   )
 }

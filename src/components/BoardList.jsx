@@ -12,10 +12,10 @@ import BoardListItem from './BoardListItem'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
 import AddItemBlock from './AddItemBlock'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import useBoardUtil from '../hooks/useBoardUtil'
 
-const BoardList = ({ listId, index, board, isSrcDroppableSelf }) => {
+const BoardList = React.memo(({ listId, index, board, isSrcDroppableSelf }) => {
   const { getListById, removeList, renameList, setListMaxItems } = useListUtil()
   const { removeListFromBoard } = useBoardUtil()
   const list = getListById(listId)
@@ -167,6 +167,6 @@ const BoardList = ({ listId, index, board, isSrcDroppableSelf }) => {
       )}
     </Draggable>
   )
-}
+})
 
 export default BoardList
