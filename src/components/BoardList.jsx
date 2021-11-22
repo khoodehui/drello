@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material'
 import MoreVert from '@mui/icons-material/MoreVert'
-import { Droppable } from 'react-beautiful-dnd'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
 import BoardListItem from './BoardListItem'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
@@ -15,7 +15,7 @@ import AddItemBlock from './AddItemBlock'
 import { useState } from 'react'
 import useBoardUtil from '../hooks/useBoardUtil'
 
-const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
+const BoardList = ({ listId, index, board, isSrcDroppableSelf }) => {
   const { getListById, removeList, renameList, setListMaxItems } = useListUtil()
   const { removeListFromBoard } = useBoardUtil()
   const list = getListById(listId)
@@ -61,96 +61,111 @@ const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
   }
 
   return (
-    <Box
-      sx={{
-        backgroundColor: theme => theme.palette.grey[100],
-        display: 'inline-block',
-        p: 2,
-        ml: 2,
-        mb: 2,
-        verticalAlign: 'top',
-        width: 375,
-        maxWidth: 0.75,
-      }}
-    >
-      <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <EditableTypography
-          inputType='text'
-          typographyVariant='h5'
-          typographyComponent='h2'
-          fontWeight='medium'
-          handleSaveChange={updateListName}
-          otherTextFieldProps={{ sx: { mr: 2 } }}
-          otherTypographyProps={{
-            sx: { mr: 2, overflowX: 'scroll'},
-            className: 'hideScrollbar'
+    <Draggable draggableId={list.id} index={index}>
+      {provided => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          sx={{
+            backgroundColor: theme => theme.palette.grey[100],
+            display: 'inline-block',
+            p: 2,
+            ml: 2,
+            mb: 2,
+            verticalAlign: 'top',
+            width: 375,
+            maxWidth: 0.75,
           }}
         >
-          {list.name}
-        </EditableTypography>
-        <Box display='flex' alignItems='center'>
-          <Typography
-            variant='h5'
-            component='p'
-            fontWeight={500}
-            display='inline'
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+            {...provided.dragHandleProps}
           >
-            {`${list.items.length}/`}
-          </Typography>
-          <EditableTypography
-            inputType='number'
-            typographyVariant='h5'
-            typographyComponent='h2'
-            fontWeight='medium'
-            handleSaveChange={updateMaxItems}
-            otherTextFieldProps={{
-              InputProps: {
-                inputProps: {
-                  min: list.items.length,
-                },
-                sx: { width: 50 },
-              },
-            }}
+            <EditableTypography
+              inputType='text'
+              typographyVariant='h5'
+              typographyComponent='h2'
+              fontWeight='medium'
+              handleSaveChange={updateListName}
+              otherTextFieldProps={{ sx: { mr: 2 } }}
+              otherTypographyProps={{
+                sx: { mr: 2, overflowX: 'scroll' },
+                className: 'hideScrollbar',
+              }}
+            >
+              {list.name}
+            </EditableTypography>
+            <Box display='flex' alignItems='center'>
+              <Typography
+                variant='h5'
+                component='p'
+                fontWeight={500}
+                display='inline'
+              >
+                {`${list.items.length}/`}
+              </Typography>
+              <EditableTypography
+                inputType='number'
+                typographyVariant='h5'
+                typographyComponent='h2'
+                fontWeight='medium'
+                handleSaveChange={updateMaxItems}
+                otherTextFieldProps={{
+                  InputProps: {
+                    inputProps: {
+                      min: list.items.length,
+                    },
+                    sx: { width: 50 },
+                  },
+                }}
+              >
+                {list.maxItems}
+              </EditableTypography>
+              <IconButton onClick={handleOpenMenu} sx={{ mr: -1 }}>
+                <MoreVert />
+              </IconButton>
+              <Menu
+                anchorEl={menuAnchor}
+                open={isMenuOpen}
+                onClose={handleCloseMenu}
+              >
+                <MenuItem onClick={deleteList}>Delete list</MenuItem>
+              </Menu>
+            </Box>
+          </Stack>
+          <Droppable
+            droppableId={list.id}
+            type='list'
+            isDropDisabled={isDropDisabled}
           >
-            {list.maxItems}
-          </EditableTypography>
-          <IconButton onClick={handleOpenMenu} sx={{mr: -1}}>
-            <MoreVert />
-          </IconButton>
-          <Menu
-            anchorEl={menuAnchor}
-            open={isMenuOpen}
-            onClose={handleCloseMenu}
-          >
-            <MenuItem onClick={deleteList}>Delete list</MenuItem>
-          </Menu>
-        </Box>
-      </Stack>
-      <Droppable droppableId={list.id} isDropDisabled={isDropDisabled}>
-        {provided => (
-          <Box
-            /*
+            {provided => (
+              <Box
+                /*
           the minHeight is to prevent the droppable from being 'disappearing' when the list has 
           no items so that items can still be dropped in the list
           */
-            minHeight='1px'
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {list.items.map((itemId, index) => (
-              <BoardListItem
-                key={itemId}
-                itemId={itemId}
-                index={index}
-                list={list}
-              />
-            ))}
-            {provided.placeholder}
-          </Box>
-        )}
-      </Droppable>
-      <AddItemBlock list={list} />
-    </Box>
+                minHeight='1px'
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {list.items.map((itemId, index) => (
+                  <BoardListItem
+                    key={itemId}
+                    itemId={itemId}
+                    index={index}
+                    list={list}
+                  />
+                ))}
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+          <AddItemBlock list={list} />
+        </Box>
+      )}
+    </Draggable>
   )
 }
 

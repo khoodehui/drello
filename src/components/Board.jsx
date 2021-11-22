@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import BoardList from './BoardList'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Box, Container, IconButton, Stack } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import useBoardUtil from '../hooks/useBoardUtil'
@@ -12,7 +12,7 @@ import AddListBlock from './AddListBlock'
 const Board = () => {
   const id = useParams().id
   const navigate = useNavigate()
-  const { getBoardById, updateBoardInfo } = useBoardUtil()
+  const { getBoardById, updateBoardInfo, swapLists } = useBoardUtil()
   const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
 
@@ -48,12 +48,12 @@ const Board = () => {
   const onDragEnd = result => {
     setSrcDroppableIndex(null)
 
-    const { source, destination } = result
+    const { source, destination, type } = result
 
+    // no action taken
     if (!destination) {
       return
     }
-
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -61,6 +61,13 @@ const Board = () => {
       return
     }
 
+    // swapping between lists
+    if (type === 'board') {
+      swapLists(board, source.index, destination.index)
+      return
+    }
+
+    // swapping between items
     if (destination.droppableId === source.droppableId) {
       swapItemsInList(
         getListById(destination.droppableId),
@@ -88,7 +95,7 @@ const Board = () => {
           typographyComponent='h1'
           handleSaveChange={updateBoardName}
           otherTextFieldProps={{
-            sx: {width: 1}
+            sx: { width: 1 },
           }}
           otherTypographyProps={{
             sx: { overflow: 'scroll' },
@@ -100,14 +107,26 @@ const Board = () => {
       </Stack>
       <Box id='lists' whiteSpace='nowrap' sx={{ overflowX: 'scroll' }}>
         <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-          {board.lists.map((listId, index) => (
-            <BoardList
-              key={listId}
-              listId={listId}
-              board={board}
-              isSrcDroppableSelf={srcDroppableIndex === index}
-            />
-          ))}
+          <Droppable droppableId={board.id} type='board' direction='horizontal'>
+            {provided => (
+              <Box
+                display='inline-block'
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {board.lists.map((listId, index) => (
+                  <BoardList
+                    key={listId}
+                    listId={listId}
+                    index={index}
+                    board={board}
+                    isSrcDroppableSelf={srcDroppableIndex === index}
+                  />
+                ))}
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
         </DragDropContext>
         <AddListBlock board={board} />
       </Box>

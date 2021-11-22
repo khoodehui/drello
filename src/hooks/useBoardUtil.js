@@ -17,26 +17,34 @@ const useBoardUtil = () => {
 
   const createSampleBoard = () => {
     const toDoList = createList('To Dos')
-    const toDoItems = [createItem('First Item').id, createItem('Second Item').id, createItem('Third Item').id]
+    const toDoItems = [
+      createItem('First Item').id,
+      createItem('Second Item').id,
+      createItem('Third Item').id,
+    ]
     addItemToList(toDoList, toDoItems)
 
     const inProgList = createList('In Progress')
-    const inProgItems = [createItem('Fourth Item').id, createItem('Fifth Item').id, createItem('Sixth Item').id]
+    const inProgItems = [
+      createItem('Fourth Item').id,
+      createItem('Fifth Item').id,
+      createItem('Sixth Item').id,
+    ]
     addItemToList(inProgList, inProgItems)
 
     const completedList = createList('Completed')
-    const completedItems = [createItem('Seventh Item').id, createItem('Eigth Item').id, createItem('Ninth Item').id]
+    const completedItems = [
+      createItem('Seventh Item').id,
+      createItem('Eigth Item').id,
+      createItem('Ninth Item').id,
+    ]
     addItemToList(completedList, completedItems)
 
     const board = {
       id: uuid(),
       name: 'Sample Board',
       desc: 'Sample board to let you experience Drello',
-      lists: [
-        toDoList.id,
-        inProgList.id,
-        completedList.id,
-      ],
+      lists: [toDoList.id, inProgList.id, completedList.id],
     }
 
     dispatch(newBoard(board))
@@ -76,6 +84,17 @@ const useBoardUtil = () => {
     dispatch(updateBoard(updatedBoard))
   }
 
+  const swapLists = (board, sourceIndex, destIndex) => {
+    const newListsArray = Array.from(board.lists)
+    const [list] = newListsArray.splice(sourceIndex, 1)
+    newListsArray.splice(destIndex, 0, list)
+    const updatedBoard = {
+      ...board,
+      lists: newListsArray,
+    }
+    dispatch(updateBoard(updatedBoard))
+  }
+
   return {
     getBoards,
     getBoardById,
@@ -85,6 +104,7 @@ const useBoardUtil = () => {
     updateBoardInfo,
     addListToBoard,
     removeListFromBoard,
+    swapLists,
   }
 }
 
