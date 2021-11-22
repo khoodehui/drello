@@ -54,7 +54,7 @@ const AddListBlock = ({ board }) => {
           p: 2,
           ml: 2,
           verticalAlign: 'top',
-          width: 332,
+          width: 407,
           maxWidth: 0.75,
         }}
         onClick={handleToggleAdd}
@@ -75,7 +75,7 @@ const AddListBlock = ({ board }) => {
         p: 2,
         ml: 2,
         verticalAlign: 'top',
-        width: 300,
+        width: 375,
         maxWidth: 0.75,
       }}
     >

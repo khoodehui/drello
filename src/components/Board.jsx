@@ -98,6 +98,7 @@ const Board = () => {
             <BoardList
               key={listId}
               listId={listId}
+              board={board}
               isSrcDroppableSelf={srcDroppableIndex === index}
             />
           ))}

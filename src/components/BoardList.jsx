@@ -1,13 +1,26 @@
-import { Box, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from '@mui/material'
+import MoreVert from '@mui/icons-material/MoreVert'
 import { Droppable } from 'react-beautiful-dnd'
 import BoardListItem from './BoardListItem'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
 import AddItemBlock from './AddItemBlock'
+import { useState } from 'react'
+import useBoardUtil from '../hooks/useBoardUtil'
 
-const BoardList = ({ listId, isSrcDroppableSelf }) => {
-  const { getListById, renameList, setListMaxItems } = useListUtil()
+const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
+  const { getListById, removeList, renameList, setListMaxItems } = useListUtil()
+  const { removeListFromBoard } = useBoardUtil()
   const list = getListById(listId)
+
+  const [menuAnchor, setMenuAnchor] = useState(null)
 
   /* 
   Dropping for a list is clearly enabled if the number of items in it is less than its item limit.
@@ -17,6 +30,10 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
   const isDropDisabled = !(
     isSrcDroppableSelf || list.items.length < list.maxItems
   )
+
+  const handleOpenMenu = event => setMenuAnchor(event.currentTarget)
+  const handleCloseMenu = () => setMenuAnchor(null)
+  const isMenuOpen = Boolean(menuAnchor)
 
   const updateListName = value => {
     if (value.length > 0) {
@@ -38,6 +55,11 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
     setListMaxItems(list, newMax)
   }
 
+  const deleteList = () => {
+    removeList(list)
+    removeListFromBoard(board, list.id)
+  }
+
   return (
     <Box
       sx={{
@@ -46,11 +68,11 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
         p: 2,
         ml: 2,
         verticalAlign: 'top',
-        width: 300,
+        width: 375,
         maxWidth: 0.75,
       }}
     >
-      <Stack direction='row' justifyContent='space-between'>
+      <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <EditableTypography
           inputType='text'
           typographyVariant='h5'
@@ -60,7 +82,7 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
         >
           {list.name}
         </EditableTypography>
-        <Box>
+        <Box display='flex' alignItems='center'>
           <Typography
             variant='h5'
             component='p'
@@ -86,12 +108,20 @@ const BoardList = ({ listId, isSrcDroppableSelf }) => {
           >
             {list.maxItems}
           </EditableTypography>
+          <IconButton onClick={handleOpenMenu}>
+            <MoreVert />
+          </IconButton>
+          <Menu anchorEl={menuAnchor} open={isMenuOpen} onClose={handleCloseMenu}>
+            <MenuItem onClick={deleteList}>
+              Delete list
+            </MenuItem>
+          </Menu>
         </Box>
       </Stack>
       <Droppable droppableId={list.id} isDropDisabled={isDropDisabled}>
         {provided => (
           <Box
-          /*
+            /*
           the minHeight is to prevent the droppable from being 'disappearing' when the list has 
           no items so that items can still be dropped in the list
           */
