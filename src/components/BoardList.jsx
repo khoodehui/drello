@@ -79,6 +79,11 @@ const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
           typographyComponent='h2'
           fontWeight='medium'
           handleSaveChange={updateListName}
+          otherTextFieldProps={{ sx: { mr: 2 } }}
+          otherTypographyProps={{
+            sx: { mr: 2, overflowX: 'scroll'},
+            className: 'hideScrollbar'
+          }}
         >
           {list.name}
         </EditableTypography>
@@ -111,10 +116,12 @@ const BoardList = ({ listId, board, isSrcDroppableSelf }) => {
           <IconButton onClick={handleOpenMenu}>
             <MoreVert />
           </IconButton>
-          <Menu anchorEl={menuAnchor} open={isMenuOpen} onClose={handleCloseMenu}>
-            <MenuItem onClick={deleteList}>
-              Delete list
-            </MenuItem>
+          <Menu
+            anchorEl={menuAnchor}
+            open={isMenuOpen}
+            onClose={handleCloseMenu}
+          >
+            <MenuItem onClick={deleteList}>Delete list</MenuItem>
           </Menu>
         </Box>
       </Stack>

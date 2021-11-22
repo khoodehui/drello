@@ -1,4 +1,4 @@
-import { IconButton, Paper, Stack } from '@mui/material'
+import { Box, IconButton, Paper, Stack } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import { Draggable } from 'react-beautiful-dnd'
 import useItemUtil from '../hooks/useItemUtil'
@@ -30,14 +30,26 @@ const BoardListItem = ({ list, itemId, index }) => {
           {...provided.dragHandleProps}
           sx={{ mt: 1, p: 1, pl: 2 }}
         >
-            <Stack direction='row' justifyContent='space-between' alignItems='center'>
-              <EditableTypography handleSaveChange={changeContent}>
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            <Box sx={{ whiteSpace: 'normal' }} maxWidth={0.85}>
+              <EditableTypography
+                handleSaveChange={changeContent}
+                otherTextFieldProps={{ multiline: true, sx: { width: 1 } }}
+                otherTypographyProps={{
+                  sx: { wordWrap: 'break-word' },
+                }}
+              >
                 {item.content}
               </EditableTypography>
-              <IconButton onClick={handleDeleteItem}>
-                <ClearIcon />
-              </IconButton>
-            </Stack>
+            </Box>
+            <IconButton onClick={handleDeleteItem}>
+              <ClearIcon />
+            </IconButton>
+          </Stack>
         </Paper>
       )}
     </Draggable>

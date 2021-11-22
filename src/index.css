@@ -3,3 +3,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* IE, MSEdge and Firefox */
+.hideScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+/* Chrome, Safari and Opera */
+.hideScrollbar::-webkit-scrollbar {
+  display: none;
+}

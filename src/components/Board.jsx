@@ -6,7 +6,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import useBoardUtil from '../hooks/useBoardUtil'
 import useListUtil from '../hooks/useListUtil'
 import EditableTypography from './EditableTypography'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import AddListBlock from './AddListBlock'
 
 const Board = () => {
@@ -15,7 +15,6 @@ const Board = () => {
   const { getBoardById, updateBoardInfo } = useBoardUtil()
   const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
   const board = getBoardById(id)
-  const ref = useRef()
 
   /*
   Keeps track of the index of the source list when an item is dragged.
@@ -79,7 +78,7 @@ const Board = () => {
   }
   return (
     <Container maxWidth='xl'>
-      <Stack ref={ref} direction='row' sx={{ mt: 3, mb: 2 }}>
+      <Stack direction='row' sx={{ mt: 3, mb: 2, whiteSpace: 'nowrap' }}>
         <IconButton onClick={goHome}>
           <ArrowBackIosNewIcon />
         </IconButton>
@@ -88,6 +87,13 @@ const Board = () => {
           typographyVariant='h4'
           typographyComponent='h1'
           handleSaveChange={updateBoardName}
+          otherTextFieldProps={{
+            sx: {width: 1}
+          }}
+          otherTypographyProps={{
+            sx: { overflow: 'scroll' },
+            className: 'hideScrollbar',
+          }}
         >
           {board.name}
         </EditableTypography>

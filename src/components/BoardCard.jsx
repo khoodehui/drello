@@ -65,11 +65,19 @@ const BoardCard = ({ board }) => {
       <Grid item xs={12} sm={6} md={4}>
         <Card>
           <CardContent>
-            <Stack direction='row' justifyContent='space-between'>
-              <Typography variant='h5' component='h2' display='inline' noWrap>
+            <Stack
+              direction='row'
+              justifyContent='space-between'
+              alignItems='center'
+            >
+              <Typography
+                variant='h5'
+                component='h2'
+                sx={{ wordWrap: 'break-word', maxWidth: 0.85 }}
+              >
                 {board.name}
               </Typography>
-              <IconButton onClick={handleOpenMenu}>
+              <IconButton onClick={handleOpenMenu} sx={{ mr: -1 }}>
                 <MoreVert />
               </IconButton>
               <Menu anchorEl={menuAnchor} open={open} onClose={handleCloseMenu}>

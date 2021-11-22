@@ -7,11 +7,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import './index.css'
 import App from './App'
 
+const theme = createTheme()
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ThemeProvider theme={createTheme()}>
+        <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
       </BrowserRouter>
