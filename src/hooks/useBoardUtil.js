@@ -16,35 +16,31 @@ const useBoardUtil = () => {
   const getBoardById = id => boards.find(board => board.id === id)
 
   const createSampleBoard = () => {
-    const toDoList = createList('To Dos')
+    const toDoList = createList('To-Do')
     const toDoItems = [
-      createItem('First Item').id,
-      createItem('Second Item').id,
-      createItem('Third Item').id,
+      createItem('Click on various elements in the board to edit them.').id,
+      createItem('Drag and drop cards, and even columns.').id,
+      createItem("Press Shift+Enter when typing a card's content to enter a new line.\n\nWorks on mobile too, although the method may be slightly different.").id,
+      createItem('Fourth Item').id,
+      createItem('Fifth Item').id,
     ]
     addItemToList(toDoList, toDoItems)
 
     const inProgList = createList('In Progress')
     const inProgItems = [
-      createItem('Fourth Item').id,
-      createItem('Fifth Item').id,
       createItem('Sixth Item').id,
+      createItem('Seventh Item').id,
+      createItem('Eight Item').id,
     ]
     addItemToList(inProgList, inProgItems)
 
-    const completedList = createList('Completed')
-    const completedItems = [
-      createItem('Seventh Item').id,
-      createItem('Eigth Item').id,
-      createItem('Ninth Item').id,
-    ]
-    addItemToList(completedList, completedItems)
+    const doneList = createList('Done')
 
     const board = {
       id: uuid(),
       name: 'Sample Board',
-      desc: 'Sample board to let you experience Drello',
-      lists: [toDoList.id, inProgList.id, completedList.id],
+      desc: 'Sample board to let you experience Drello right away.',
+      lists: [toDoList.id, inProgList.id, doneList.id],
     }
 
     dispatch(newBoard(board))
@@ -56,9 +52,9 @@ const useBoardUtil = () => {
       name,
       desc,
       lists: [
-        createList('To Dos').id,
+        createList('To-Do').id,
         createList('In Progress').id,
-        createList('Completed').id,
+        createList('Done').id,
       ],
     }
     dispatch(newBoard(board))
