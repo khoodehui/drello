@@ -8,7 +8,7 @@ import useItemUtil from './useItemUtil'
 const useBoardUtil = () => {
   const boards = useSelector(state => state.boards)
   const dispatch = useDispatch()
-  const { createList, addItemToList } = useListUtil()
+  const { getListById, createList, addItemToList, removeList } = useListUtil()
   const { createItem } = useItemUtil()
 
   const getBoards = () => boards
@@ -65,7 +65,10 @@ const useBoardUtil = () => {
     return board
   }
 
-  const removeBoard = board => dispatch(deleteBoard(board))
+  const removeBoard = board => {
+    board.lists.forEach(listId => removeList(getListById(listId)))
+    dispatch(deleteBoard(board))
+  }
 
   const updateBoardInfo = (board, name, desc = board.desc) => {
     const updatedBoard = { ...board, name, desc }
