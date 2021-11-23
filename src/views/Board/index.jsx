@@ -84,7 +84,7 @@ const Board = () => {
     }
   }
   return (
-    <Container maxWidth='xl'>
+    <Container maxWidth='xl' sx={{pb: 4}}>
       <Stack direction='row' sx={{ mt: 3, mb: 2, whiteSpace: 'nowrap' }}>
         <IconButton onClick={goHome}>
           <ArrowBackIosNewIcon />

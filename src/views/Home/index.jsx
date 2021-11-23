@@ -16,8 +16,8 @@ const Home = () => {
       >
         Boards
       </Typography>
-      <Container maxWidth='md'>
-        <Grid container spacing={4}>
+      <Container maxWidth='md' sx={{pb: 8}}>
+        <Grid container spacing={4} alignItems='center'>
           {boards.map(board => (
             <BoardCard key={board.id} board={board} />
           ))}

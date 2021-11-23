@@ -71,7 +71,6 @@ const KanbanColumn = React.memo(({ columnId, index, board, isSrcDroppableSelf })
             display: 'inline-block',
             p: 2,
             ml: 2,
-            mb: 2,
             verticalAlign: 'top',
             width: 375,
             maxWidth: 0.75,

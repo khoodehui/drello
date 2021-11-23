@@ -18,7 +18,7 @@ const useBoardUtil = () => {
   const createSampleBoard = () => {
     const toDoColumn = createColumn('To-Do')
     const toDoCards = [
-      createCard('Click on various elements in the board to edit them.').id,
+      createCard('Click on various elements in the board to edit them, including the contents of this card.').id,
       createCard('Drag and drop cards, and even columns.').id,
       createCard("Press Shift+Enter when typing a card's content to enter a new line.\n\nWorks on mobile too, although the method may be slightly different.").id,
       createCard('Fourth Card').id,
@@ -39,7 +39,7 @@ const useBoardUtil = () => {
     const board = {
       id: uuid(),
       name: 'Sample Board',
-      desc: 'Sample board to let you experience Drello right away.',
+      desc: 'Try out Drello right away.',
       columns: [toDoColumn.id, inProgColumn.id, doneColumn.id],
     }
 
