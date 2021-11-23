@@ -2,19 +2,19 @@ import { Box, Button, IconButton, Paper, TextField } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import React, { useState } from 'react'
-import useItemUtil from '../hooks/useItemUtil'
-import useListUtil from '../hooks/useListUtil'
+import useCardUtil from '../hooks/useCardUtil'
+import useColumnUtil from '../hooks/useColumnUtil'
 
-const AddItemBlock = React.memo(({ list }) => {
+const AddCardBlock = React.memo(({ column }) => {
   const [isAdding, setIsAdding] = useState(false)
   const [content, setContent] = useState('')
-  const { addItemToList } = useListUtil()
-  const { createItem } = useItemUtil()
+  const { addCardToColumn } = useColumnUtil()
+  const { createCard } = useCardUtil()
 
   const handleToggleAdd = () => setIsAdding(true)
   const handleContentChange = event => setContent(event.target.value)
   const isAddDisabled =
-    list.items.length >= list.maxItems || content.trim().length === 0
+    column.cards.length >= column.maxCards || content.trim().length === 0
 
   const stopAdding = () => {
     setIsAdding(false)
@@ -26,7 +26,7 @@ const AddItemBlock = React.memo(({ list }) => {
     if (event.key === 'Enter' && !event.shiftKey && !isAddDisabled) {
       // prevent textfield focus loss
       event.preventDefault()
-      addItem()
+      addCard()
     } else if (event.key === 'Escape') {
       stopAdding()
     }
@@ -34,25 +34,25 @@ const AddItemBlock = React.memo(({ list }) => {
 
   const handleOnBlur = () => {
     if (!isAddDisabled) {
-      addItem()
+      addCard()
     }
     stopAdding()
   }
 
-  const addItem = () => {
-    addItemToList(list, createItem(content.trim()).id)
+  const addCard = () => {
+    addCardToColumn(column, createCard(content.trim()).id)
     setContent('')
   }
 
   if (!isAdding) {
     return (
       <Button
-        disabled={list.items.length >= list.maxItems}
+        disabled={column.cards.length >= column.maxCards}
         startIcon={<AddIcon />}
         onClick={handleToggleAdd}
         sx={{ mt: 2 }}
       >
-        New Item
+        New Card
       </Button>
     )
   }
@@ -63,7 +63,7 @@ const AddItemBlock = React.memo(({ list }) => {
         <TextField
           autoFocus
           multiline
-          placeholder='Item content'
+          placeholder='Card content'
           value={content}
           onChange={handleContentChange}
           onKeyDown={handleKeyDown}
@@ -76,9 +76,9 @@ const AddItemBlock = React.memo(({ list }) => {
         disabled={isAddDisabled}
         // prevents textfield from losing focus when button is pressed
         onMouseDown={e => e.preventDefault()}
-        onClick={addItem}
+        onClick={addCard}
       >
-        Add Item
+        Add Card
       </Button>
       <IconButton onMouseDown={e => e.preventDefault()} onClick={stopAdding}>
         <CloseIcon />
@@ -87,4 +87,4 @@ const AddItemBlock = React.memo(({ list }) => {
   )
 })
 
-export default AddItemBlock
+export default AddCardBlock

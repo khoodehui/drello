@@ -1,25 +1,25 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import BoardList from './BoardList'
+import BoardColumn from './BoardColumn'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Box, Container, IconButton, Stack } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import useBoardUtil from '../hooks/useBoardUtil'
-import useListUtil from '../hooks/useListUtil'
+import useColumnUtil from '../hooks/useColumnUtil'
 import EditableTypography from './EditableTypography'
 import { useState } from 'react'
-import AddListBlock from './AddListBlock'
+import AddColumnBlock from './AddColumnBlock'
 
 const Board = () => {
   const id = useParams().id
   const navigate = useNavigate()
-  const { getBoardById, updateBoardInfo, swapLists } = useBoardUtil()
-  const { getListById, swapItemsInList, swapItemBetweenLists } = useListUtil()
+  const { getBoardById, updateBoardInfo, swapColumns } = useBoardUtil()
+  const { getColumnById, swapCardsInColumn, swapCardBetweenColumns } = useColumnUtil()
   const board = getBoardById(id)
 
   /*
-  Keeps track of the index of the source list when an item is dragged.
-  Used to still allow dragging and dropping within a list even when it has max items.
-  See the variable isDropDisabled in BoardList.jsx for more info.
+  Keeps track of the index of the source column when a card is dragged.
+  Used to still allow dragging and dropping within a column even when it has max cards.
+  See the variable isDropDisabled in BoardColumn.jsx for more info.
   */
   const [srcDroppableIndex, setSrcDroppableIndex] = useState(null)
 
@@ -39,12 +39,12 @@ const Board = () => {
     }
   }
 
-  // updates the index of the source list when a drag operation begins
+  // updates the index of the source column when a drag operation begins
   const onDragStart = start => {
-    setSrcDroppableIndex(board.lists.indexOf(start.source.droppableId))
+    setSrcDroppableIndex(board.columns.indexOf(start.source.droppableId))
   }
 
-  // updates the state(s) of the involved list(s) at the end of a drag and drop operation
+  // updates the state(s) of the involved column(s) at the end of a drag and drop operation
   const onDragEnd = result => {
     setSrcDroppableIndex(null)
 
@@ -61,23 +61,23 @@ const Board = () => {
       return
     }
 
-    // swapping between lists
+    // swapping between columns
     if (type === 'board') {
-      swapLists(board, source.index, destination.index)
+      swapColumns(board, source.index, destination.index)
       return
     }
 
-    // swapping between items
+    // swapping between cards
     if (destination.droppableId === source.droppableId) {
-      swapItemsInList(
-        getListById(destination.droppableId),
+      swapCardsInColumn(
+        getColumnById(destination.droppableId),
         source.index,
         destination.index
       )
     } else {
-      swapItemBetweenLists(
-        getListById(source.droppableId),
-        getListById(destination.droppableId),
+      swapCardBetweenColumns(
+        getColumnById(source.droppableId),
+        getColumnById(destination.droppableId),
         source.index,
         destination.index
       )
@@ -111,21 +111,21 @@ const Board = () => {
             <Box
               ref={provided.innerRef}
               {...provided.droppableProps}
-              id='lists'
+              id='columns'
               whiteSpace='nowrap'
               sx={{ overflowX: 'scroll' }}
             >
-              {board.lists.map((listId, index) => (
-                <BoardList
-                  key={listId}
-                  listId={listId}
+              {board.columns.map((columnId, index) => (
+                <BoardColumn
+                  key={columnId}
+                  columnId={columnId}
                   index={index}
                   board={board}
                   isSrcDroppableSelf={srcDroppableIndex === index}
                 />
               ))}
               {provided.placeholder}
-              <AddListBlock board={board} />
+              <AddColumnBlock board={board} />
             </Box>
           )}
         </Droppable>

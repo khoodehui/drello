@@ -8,28 +8,28 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
-import useListUtil from '../hooks/useListUtil'
+import useColumnUtil from '../hooks/useColumnUtil'
 import React, { useState } from 'react'
 import useBoardUtil from '../hooks/useBoardUtil'
 
-const AddListBlock = React.memo(({ board }) => {
+const AddColumnBlock = React.memo(({ board }) => {
   const [isAdding, setIsAdding] = useState(false)
-  const [listName, setListName] = useState('')
-  const { createList } = useListUtil()
-  const { addListToBoard } = useBoardUtil()
+  const [columnName, setColumnName] = useState('')
+  const { createColumn } = useColumnUtil()
+  const { addColumnToBoard } = useBoardUtil()
 
   const handleToggleAdd = () => setIsAdding(true)
-  const handleListNameChange = event => setListName(event.target.value)
-  const isAddDisabled = listName.trim().length === 0
+  const handleColumnNameChange = event => setColumnName(event.target.value)
+  const isAddDisabled = columnName.trim().length === 0
 
   const stopAdding = () => {
     setIsAdding(false)
-    setListName('')
+    setColumnName('')
   }
 
   const handleKeyDown = event => {
     if (event.key === 'Enter' && !isAddDisabled) {
-      addList()
+      addColumn()
     } else if (event.key === 'Escape') {
       stopAdding()
     }
@@ -39,8 +39,8 @@ const AddListBlock = React.memo(({ board }) => {
     stopAdding()
   }
 
-  const addList = () => {
-    addListToBoard(board, createList(listName.trim()).id)
+  const addColumn = () => {
+    addColumnToBoard(board, createColumn(columnName.trim()).id)
     stopAdding()
   }
 
@@ -61,7 +61,7 @@ const AddListBlock = React.memo(({ board }) => {
       >
         <Box display='flex' alignItems='center'>
           <AddIcon fontSize='small' sx={{ mr: 1 }} />
-          <Typography variant='button'>New List</Typography>
+          <Typography variant='button'>New Column</Typography>
         </Box>
       </CardActionArea>
     )
@@ -83,9 +83,9 @@ const AddListBlock = React.memo(({ board }) => {
         <TextField
           variant='outlined'
           autoFocus
-          placeholder='List name'
-          value={listName}
-          onChange={handleListNameChange}
+          placeholder='Column name'
+          value={columnName}
+          onChange={handleColumnNameChange}
           onKeyDown={handleKeyDown}
           onBlur={handleOnBlur}
           sx={{backgroundColor: 'white', width: 1}}
@@ -95,9 +95,9 @@ const AddListBlock = React.memo(({ board }) => {
         variant='contained'
         onMouseDown={e => e.preventDefault()}
         disabled={isAddDisabled}
-        onClick={addList}
+        onClick={addColumn}
       >
-        Add List
+        Add Column
       </Button>
       <IconButton onMouseDown={e => e.preventDefault()} onClick={stopAdding}>
         <CloseIcon />
@@ -106,4 +106,4 @@ const AddListBlock = React.memo(({ board }) => {
   )
 })
 
-export default AddListBlock
+export default AddColumnBlock

@@ -22,7 +22,6 @@ const EditableTypography = ({
           }`
         ]
       : {}
-    console.log(fontWeightStyle)
     return { ...typographyStyle, fontWeight: fontWeightStyle, p: 0 }
   }
 

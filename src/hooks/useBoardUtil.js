@@ -1,46 +1,46 @@
 import { v4 as uuid } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
-import useListUtil from './useListUtil'
+import useColumnUtil from './useColumnUtil'
 import { deleteBoard, newBoard, updateBoard } from '../reducers/boardsReducer'
-import useItemUtil from './useItemUtil'
+import useCardUtil from './useCardUtil'
 
 // hook that provides utility functions with respect to boards
 const useBoardUtil = () => {
   const boards = useSelector(state => state.boards)
   const dispatch = useDispatch()
-  const { getListById, createList, addItemToList, removeList } = useListUtil()
-  const { createItem } = useItemUtil()
+  const { getColumnById, createColumn, addCardToColumn, removeColumn } = useColumnUtil()
+  const { createCard } = useCardUtil()
 
   const getBoards = () => boards
 
   const getBoardById = id => boards.find(board => board.id === id)
 
   const createSampleBoard = () => {
-    const toDoList = createList('To-Do')
-    const toDoItems = [
-      createItem('Click on various elements in the board to edit them.').id,
-      createItem('Drag and drop cards, and even columns.').id,
-      createItem("Press Shift+Enter when typing a card's content to enter a new line.\n\nWorks on mobile too, although the method may be slightly different.").id,
-      createItem('Fourth Item').id,
-      createItem('Fifth Item').id,
+    const toDoColumn = createColumn('To-Do')
+    const toDoCards = [
+      createCard('Click on various elements in the board to edit them.').id,
+      createCard('Drag and drop cards, and even columns.').id,
+      createCard("Press Shift+Enter when typing a card's content to enter a new line.\n\nWorks on mobile too, although the method may be slightly different.").id,
+      createCard('Fourth Card').id,
+      createCard('Fifth Card').id,
     ]
-    addItemToList(toDoList, toDoItems)
+    addCardToColumn(toDoColumn, toDoCards)
 
-    const inProgList = createList('In Progress')
-    const inProgItems = [
-      createItem('Sixth Item').id,
-      createItem('Seventh Item').id,
-      createItem('Eight Item').id,
+    const inProgColumn = createColumn('In Progress')
+    const inProgCards = [
+      createCard('Sixth Card').id,
+      createCard('Seventh Card').id,
+      createCard('Eight Card').id,
     ]
-    addItemToList(inProgList, inProgItems)
+    addCardToColumn(inProgColumn, inProgCards)
 
-    const doneList = createList('Done')
+    const doneColumn = createColumn('Done')
 
     const board = {
       id: uuid(),
       name: 'Sample Board',
       desc: 'Sample board to let you experience Drello right away.',
-      lists: [toDoList.id, inProgList.id, doneList.id],
+      columns: [toDoColumn.id, inProgColumn.id, doneColumn.id],
     }
 
     dispatch(newBoard(board))
@@ -51,10 +51,10 @@ const useBoardUtil = () => {
       id: uuid(),
       name,
       desc,
-      lists: [
-        createList('To-Do').id,
-        createList('In Progress').id,
-        createList('Done').id,
+      columns: [
+        createColumn('To-Do').id,
+        createColumn('In Progress').id,
+        createColumn('Done').id,
       ],
     }
     dispatch(newBoard(board))
@@ -62,7 +62,7 @@ const useBoardUtil = () => {
   }
 
   const removeBoard = board => {
-    board.lists.forEach(listId => removeList(getListById(listId)))
+    board.columns.forEach(columnId => removeColumn(getColumnById(columnId)))
     dispatch(deleteBoard(board))
   }
 
@@ -71,25 +71,25 @@ const useBoardUtil = () => {
     dispatch(updateBoard(updatedBoard))
   }
 
-  const addListToBoard = (board, listId) => {
-    const newListsArray = board.lists.concat(listId)
-    const updatedBoard = { ...board, lists: newListsArray }
+  const addColumnToBoard = (board, columnId) => {
+    const newColumns = board.columns.concat(columnId)
+    const updatedBoard = { ...board, columns: newColumns }
     dispatch(updateBoard(updatedBoard))
   }
 
-  const removeListFromBoard = (board, listId) => {
-    const newListsArray = board.lists.filter(id => id !== listId)
-    const updatedBoard = { ...board, lists: newListsArray }
+  const removeColumnFromBoard = (board, columnId) => {
+    const newColumns = board.columns.filter(id => id !== columnId)
+    const updatedBoard = { ...board, columns: newColumns }
     dispatch(updateBoard(updatedBoard))
   }
 
-  const swapLists = (board, sourceIndex, destIndex) => {
-    const newListsArray = Array.from(board.lists)
-    const [list] = newListsArray.splice(sourceIndex, 1)
-    newListsArray.splice(destIndex, 0, list)
+  const swapColumns = (board, sourceIndex, destIndex) => {
+    const newColumns = Array.from(board.columns)
+    const [column] = newColumns.splice(sourceIndex, 1)
+    newColumns.splice(destIndex, 0, column)
     const updatedBoard = {
       ...board,
-      lists: newListsArray,
+      columns: newColumns,
     }
     dispatch(updateBoard(updatedBoard))
   }
@@ -101,9 +101,9 @@ const useBoardUtil = () => {
     createBoard,
     removeBoard,
     updateBoardInfo,
-    addListToBoard,
-    removeListFromBoard,
-    swapLists,
+    addColumnToBoard,
+    removeColumnFromBoard,
+    swapColumns,
   }
 }
 
