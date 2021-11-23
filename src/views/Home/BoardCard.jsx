@@ -95,7 +95,9 @@ const BoardCard = ({ board }) => {
                 </MenuItem>
               </Menu>
             </Stack>
-            <Typography color='text.secondary'>{board.desc}</Typography>
+            <Typography color='text.secondary' sx={{ wordWrap: 'break-word' }}>
+              {board.desc}
+            </Typography>
           </CardContent>
           <CardActions>
             <Button onClick={handleOpenBoard}>Open</Button>

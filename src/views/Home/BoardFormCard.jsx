@@ -40,12 +40,13 @@ const BoardFormCard = props => {
     props.setEditing(false)
   }
 
-  // if creating, disable when no name is given
-  // if editing, disable if no changes is made to name or desc
+  // disable when no name is given
+  // if editing, disable too if no changes is made to name or desc
   const disableSubmit =
-    props.type === 'create'
-      ? name.trim() === ''
-      : name.trim() === props.board.name && desc.trim() === props.board.desc
+    name.trim() === '' ||
+    (props.type === 'update' &&
+      name.trim() === props.board.name &&
+      desc.trim() === props.board.desc)
 
   const handleCancel = () => props.setEditing(false)
 
