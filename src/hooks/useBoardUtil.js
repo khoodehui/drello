@@ -83,6 +83,7 @@ const useBoardUtil = () => {
     dispatch(updateBoard(updatedBoard))
   }
 
+  // used when a column is dragged and dropped
   const swapColumns = (board, sourceIndex, destIndex) => {
     const newColumns = Array.from(board.columns)
     const [column] = newColumns.splice(sourceIndex, 1)

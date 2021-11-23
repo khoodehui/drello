@@ -34,11 +34,6 @@ const useColumnUtil = () => {
     dispatch(updateColumn(updatedColumn))
   }
 
-  const enableDrop = column => {
-    const updatedColumn = { ...column }
-    dispatch(updateColumn(updatedColumn))
-  }
-
   const addCardToColumn = (column, cardId) => {
     const newCards = column.cards.concat(cardId)
     const updatedColumn = { ...column, cards: newCards }
@@ -59,6 +54,7 @@ const useColumnUtil = () => {
     dispatch(updateColumn(updatedColumn))
   }
 
+  // used when a card is dragged and dropped within a column
   const swapCardsInColumn = (column, sourceIndex, destIndex) => {
     const newCards = Array.from(column.cards)
     const [card] = newCards.splice(sourceIndex, 1)
@@ -70,6 +66,7 @@ const useColumnUtil = () => {
     dispatch(updateColumn(updatedColumn))
   }
 
+  // used when a card is dragged and dropped between two columns
   const swapCardBetweenColumns = (
     sourceColumn,
     destColumn,
@@ -100,7 +97,6 @@ const useColumnUtil = () => {
     createColumn,
     removeColumn,
     renameColumn,
-    enableDrop,
     addCardToColumn,
     removeCardFromColumn,
     setColumnMaxCards,

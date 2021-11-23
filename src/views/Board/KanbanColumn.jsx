@@ -52,6 +52,7 @@ const KanbanColumn = React.memo(({ columnId, index, board, isSrcDroppableSelf })
     // new max must be at least the number of cards in the column
     const newMax =
       parsedValue < column.cards.length ? column.cards.length : parsedValue
+      
     setColumnMaxCards(column, newMax)
   }
 

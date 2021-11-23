@@ -44,16 +44,18 @@ const Board = () => {
     setSrcDroppableIndex(board.columns.indexOf(start.source.droppableId))
   }
 
-  // updates the state(s) of the involved column(s) at the end of a drag and drop operation
+  // updates the application state at the end of a drag and drop operation to save the changes
   const onDragEnd = result => {
     setSrcDroppableIndex(null)
 
     const { source, destination, type } = result
 
-    // no action taken
+    // no action taken if a card is dragged out of the droppable zone
     if (!destination) {
       return
     }
+
+    // no action taken if a card's position is not changed
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -61,13 +63,13 @@ const Board = () => {
       return
     }
 
-    // swapping between columns
+    // handler when a column was dragged
     if (type === 'board') {
       swapColumns(board, source.index, destination.index)
       return
     }
 
-    // swapping between cards
+    // handler when a card was dragged
     if (destination.droppableId === source.droppableId) {
       swapCardsInColumn(
         getColumnById(destination.droppableId),

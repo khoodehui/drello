@@ -13,6 +13,7 @@ const EditableTypography = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
 
+  // generate font style for the textfield based on the given typography style
   const getTextFieldStyle = theme => {
     const typographyStyle = theme.typography[typographyVariant]
     const fontWeightStyle = fontWeight
@@ -27,11 +28,13 @@ const EditableTypography = ({
 
   const handleToggleEdit = () => setIsEditing(true)
 
+  // highlights the contained text when the textfield is clicked
   const handleOnFocus = event => {
     event.target.select()
   }
 
   // allows input to be saved by pressing enter or escape keys
+  // nothing happens if shift is pressed together with enter
   const handleKeyDown = event => {
     if ((event.key === 'Enter' && !event.shiftKey) || event.key === 'Escape') {
       event.target.blur()

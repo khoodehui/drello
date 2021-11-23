@@ -44,11 +44,13 @@ const BoardCard = ({ board }) => {
 
   const handleOpenBoard = () => navigate(`/${board.id}`)
 
+  // shows the dialog pop up to ask for confirmation
   const handleDeleteBoard = () => {
     setMenuAnchor(null)
     setShowDialog(true)
   }
 
+  // closes the dialog pop up
   const handleCloseDialog = () => setShowDialog(false)
 
   const handleDeleteConfirm = () => {

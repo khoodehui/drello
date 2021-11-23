@@ -24,7 +24,7 @@ const AddCardBlock = React.memo(({ column }) => {
   const handleKeyDown = event => {
     // allows submit using shift + enter
     if (event.key === 'Enter' && !event.shiftKey && !isAddDisabled) {
-      // prevent textfield focus loss
+      // prevent textfield focus loss else the onBlur event will fire off
       event.preventDefault()
       addCard()
     } else if (event.key === 'Escape') {
@@ -32,6 +32,7 @@ const AddCardBlock = React.memo(({ column }) => {
     }
   }
 
+  // adds the card if there is content provided, then collapse the form
   const handleOnBlur = () => {
     if (!isAddDisabled) {
       addCard()

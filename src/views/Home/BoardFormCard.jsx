@@ -11,9 +11,9 @@ import {
 import { Box } from '@mui/system'
 import useBoardUtil from '../../hooks/useBoardUtil'
 
+// can be used for both creating and editing a board
 const BoardFormCard = props => {
-  // if creating, use empty name and desc
-  // if editing, use board's original name and desc
+  // if creating, use empty name and desc. If editing, use board's original name and desc
   const [name, setName] = useState(
     props.type === 'create' ? '' : props.board.name
   )
@@ -40,8 +40,7 @@ const BoardFormCard = props => {
     props.setEditing(false)
   }
 
-  // disable when no name is given
-  // if editing, disable too if no changes is made to name or desc
+  // disable when no name is given. If editing, disable too if no changes is made to name or desc
   const disableSubmit =
     name.trim() === '' ||
     (props.type === 'update' &&
