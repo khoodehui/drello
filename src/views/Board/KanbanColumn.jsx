@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   Box,
   IconButton,
@@ -8,14 +9,13 @@ import {
 } from '@mui/material'
 import MoreVert from '@mui/icons-material/MoreVert'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
-import BoardColumnCard from './BoardColumnCard'
-import useColumnUtil from '../hooks/useColumnUtil'
-import EditableTypography from './EditableTypography'
+import EditableTypography from '../../components/EditableTypography'
 import AddCardBlock from './AddCardBlock'
-import React, { useState } from 'react'
-import useBoardUtil from '../hooks/useBoardUtil'
+import KanbanCard from './KanbanCard'
+import useColumnUtil from '../../hooks/useColumnUtil'
+import useBoardUtil from '../../hooks/useBoardUtil'
 
-const BoardColumn = React.memo(({ columnId, index, board, isSrcDroppableSelf }) => {
+const KanbanColumn = React.memo(({ columnId, index, board, isSrcDroppableSelf }) => {
   const { getColumnById, removeColumn, renameColumn, setColumnMaxCards } = useColumnUtil()
   const { removeColumnFromBoard } = useBoardUtil()
   const column = getColumnById(columnId)
@@ -151,7 +151,7 @@ const BoardColumn = React.memo(({ columnId, index, board, isSrcDroppableSelf }) 
                 {...provided.droppableProps}
               >
                 {column.cards.map((cardId, index) => (
-                  <BoardColumnCard
+                  <KanbanCard
                     key={cardId}
                     cardId={cardId}
                     index={index}
@@ -169,4 +169,4 @@ const BoardColumn = React.memo(({ columnId, index, board, isSrcDroppableSelf }) 
   )
 })
 
-export default BoardColumn
+export default KanbanColumn

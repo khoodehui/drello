@@ -1,13 +1,13 @@
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import BoardColumn from './BoardColumn'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Box, Container, IconButton, Stack } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import useBoardUtil from '../hooks/useBoardUtil'
-import useColumnUtil from '../hooks/useColumnUtil'
-import EditableTypography from './EditableTypography'
-import { useState } from 'react'
+import EditableTypography from '../../components/EditableTypography'
+import KanbanColumn from './KanbanColumn'
 import AddColumnBlock from './AddColumnBlock'
+import useBoardUtil from '../../hooks/useBoardUtil'
+import useColumnUtil from '../../hooks/useColumnUtil'
 
 const Board = () => {
   const id = useParams().id
@@ -116,7 +116,7 @@ const Board = () => {
               sx={{ overflowX: 'scroll' }}
             >
               {board.columns.map((columnId, index) => (
-                <BoardColumn
+                <KanbanColumn
                   key={columnId}
                   columnId={columnId}
                   index={index}

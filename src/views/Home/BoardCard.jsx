@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Button,
@@ -21,9 +22,8 @@ import {
 import MoreVert from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useState } from 'react'
-import BoardCardForm from './BoardCardForm'
-import useBoardUtil from '../hooks/useBoardUtil'
+import BoardFormCard from './BoardFormCard'
+import useBoardUtil from '../../hooks/useBoardUtil'
 
 const BoardCard = ({ board }) => {
   const navigate = useNavigate()
@@ -57,7 +57,7 @@ const BoardCard = ({ board }) => {
   }
 
   if (editing) {
-    return <BoardCardForm type='update' setEditing={setEditing} board={board} />
+    return <BoardFormCard type='update' setEditing={setEditing} board={board} />
   }
 
   return (

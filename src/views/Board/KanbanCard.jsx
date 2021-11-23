@@ -1,12 +1,12 @@
+import React from 'react'
 import { Box, IconButton, Paper, Stack } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import { Draggable } from 'react-beautiful-dnd'
-import React from 'react'
-import useCardUtil from '../hooks/useCardUtil'
-import EditableTypography from './EditableTypography'
-import useColumnUtil from '../hooks/useColumnUtil'
+import EditableTypography from '../../components/EditableTypography'
+import useCardUtil from '../../hooks/useCardUtil'
+import useColumnUtil from '../../hooks/useColumnUtil'
 
-const BoardColumnCard = React.memo(({ column, cardId, index }) => {
+const KanbanCard = React.memo(({ column, cardId, index }) => {
   const { getCardById, removeCard, updateCardContent } = useCardUtil()
   const { removeCardFromColumn } = useColumnUtil()
   const card = getCardById(cardId)
@@ -57,4 +57,4 @@ const BoardColumnCard = React.memo(({ column, cardId, index }) => {
   )
 })
 
-export default BoardColumnCard
+export default KanbanCard

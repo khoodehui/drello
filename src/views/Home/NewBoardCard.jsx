@@ -7,7 +7,7 @@ import {
   Icon,
   Typography,
 } from '@mui/material'
-import BoardCardForm from './BoardCardForm'
+import BoardFormCard from './BoardFormCard'
 
 const NewBoardCard = () => {
   const [editing, setEditing] = useState(false)
@@ -15,7 +15,7 @@ const NewBoardCard = () => {
   const handleNewBoard = () => setEditing(true)
 
   if (editing) {
-    return <BoardCardForm type='create' setEditing={setEditing} />
+    return <BoardFormCard type='create' setEditing={setEditing} />
   }
 
   return (

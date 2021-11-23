@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   Box,
   Button,
@@ -8,9 +9,8 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
-import useColumnUtil from '../hooks/useColumnUtil'
-import React, { useState } from 'react'
-import useBoardUtil from '../hooks/useBoardUtil'
+import useColumnUtil from '../../hooks/useColumnUtil'
+import useBoardUtil from '../../hooks/useBoardUtil'
 
 const AddColumnBlock = React.memo(({ board }) => {
   const [isAdding, setIsAdding] = useState(false)

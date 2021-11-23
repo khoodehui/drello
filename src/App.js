@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
-import Home from './components/Home'
-import Board from './components/Board'
-import useBoardUtil from './hooks/useBoardUtil'
 import DrelloAppBar from './components/DrelloAppBar'
+import Home from './views/Home'
+import Board from './views/Board'
+import useBoardUtil from './hooks/useBoardUtil'
 
 const App = () => {
   const { createSampleBoard } = useBoardUtil()

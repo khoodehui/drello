@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import {
   Button,
   Card,
@@ -8,10 +9,9 @@ import {
   TextField,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import useBoardUtil from '../hooks/useBoardUtil'
-import { useNavigate } from 'react-router'
+import useBoardUtil from '../../hooks/useBoardUtil'
 
-const BoardCardForm = props => {
+const BoardFormCard = props => {
   // if creating, use empty name and desc
   // if editing, use board's original name and desc
   const [name, setName] = useState(
@@ -94,4 +94,4 @@ const BoardCardForm = props => {
   )
 }
 
-export default BoardCardForm
+export default BoardFormCard
